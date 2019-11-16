@@ -12,6 +12,13 @@ class Name
 		this.lastName = last;
 	}
 	
+	/*** Methods ***/
+	@Override
+	public String toString()
+	{
+		return (firstName + " " + lastName + "\n");
+	}
+	
 	/*** Getters ***/
 	public String getFirst()
 	{

@@ -14,6 +14,13 @@ class Date
 		this.year = year;
 	}
 	
+	/*** Methods ***/
+	@Override
+	public String toString()
+	{
+		return (month + " " + day + ", " + year + "\n");
+	}
+	
 	/*** Getters ***/
 	public String getDay()
 	{

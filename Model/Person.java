@@ -16,6 +16,7 @@ abstract class Person
 		this.home = home;
 	}
 	
+	
 	/*** Getters ***/
 	public Name getName()
 	{
