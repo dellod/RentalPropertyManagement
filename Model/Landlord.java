@@ -16,6 +16,27 @@ class Landlord extends Person
 	}
 	
 	/*** Methods ***/
+	void registerProperty(Property property)
+	{
+		propertysOwned.add(property);
+		System.out.println("Property has been registered!");
+	}
+	
+	void deleteProperty(Property property) // Delete by object.
+	{
+		propertysOwned.remove(property);
+	}
+	
+	void deleteProperty(int index) // Delete by index.
+	{
+		propertysOwned.remove(index);
+	}
+	
+	boolean payFee(Property propertyToPost) // Pay fee to post property online.
+	{
+		return false; // TODO connect this with the model controller.
+	}
+	
 	@Override
 	public String toString()
 	{

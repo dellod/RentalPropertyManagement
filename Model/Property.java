@@ -29,7 +29,7 @@ class Property
 	{
 		return ("Property: " + address.toString() +
 				"\tState: " + state +
-				"\n\tOwnder: " + owner.toString());
+				"\n\tOwner: " + owner.toString());
 	}
 	
 	/*** Getters ***/
