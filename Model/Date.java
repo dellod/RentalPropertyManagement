@@ -7,6 +7,11 @@ class Date
 	private String year;
 	
 	/*** Constructors ***/
+	public Date()
+	{
+		setCurrentDate();
+	}
+	
 	public Date(String day, String month, String year)
 	{
 		this.day = day;
@@ -15,10 +20,20 @@ class Date
 	}
 	
 	/*** Methods ***/
+	public void setCurrentDate()
+	{
+		String tempString = java.time.LocalDate.now().toString();
+		String delims = "[-]+";
+		String[] tokens = tempString.split(delims);
+		year = tokens[0];
+		month = tokens[1];
+		day = tokens[2];
+	}
+	
 	@Override
 	public String toString()
 	{
-		return (month + " " + day + ", " + year + "\n");
+		return (month + "/" + day + "/" + year + "\n");
 	}
 	
 	/*** Getters ***/

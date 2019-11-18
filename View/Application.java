@@ -56,6 +56,7 @@ public class Application {
 			{
 				//TODO add implementation, open another window gui
 				System.out.println("Manager Selected");
+				frmRentalProperty.dispose();
 				ManagerGUI mg = new ManagerGUI();
 				mg.ManagerScreen();
 			}
@@ -70,6 +71,7 @@ public class Application {
 			{
 				//TODO add implementation, open another window gui
 				System.out.println("Landlord Selected");
+				frmRentalProperty.dispose();
 				LandlordGUI lg = new LandlordGUI();
 				lg.LandlordScreen();
 			}
@@ -84,6 +86,7 @@ public class Application {
 			{
 				//TODO add implementation, open another window gui
 				System.out.println("Renter Selected");
+				frmRentalProperty.dispose();
 				RenterGUI rg = new RenterGUI();
 				rg.RenterScreen();
 			}

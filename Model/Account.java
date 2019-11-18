@@ -1,5 +1,6 @@
 package Model;
 
+// NOTE: use singleton pattern when tyring to login.
 class Account 
 {
 	private String username;
