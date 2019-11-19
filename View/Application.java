@@ -12,7 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Color;
 
-public class Application {
+class Application extends GUI
+{
 
 	private JFrame frmRentalProperty;
 

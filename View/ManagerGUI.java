@@ -10,7 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
-public class ManagerGUI {
+class ManagerGUI extends GUI
+{
 
 	private JFrame frmRentalPropertymanager;
 	private JTextField textField;
