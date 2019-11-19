@@ -24,18 +24,22 @@ public class ApplicationController
 		app = new Application(this);
 		userType = "GARBAGE";
 		msgFromGUI = new String[100]; //Buffer for Application GUI
+		System.out.println("Trying to connect to server...");
 		
 		// Add server connections here
 		try
 		{
 			theSocket = new Socket(serverName, port);
-			objectIn = new ObjectInputStream(theSocket.getInputStream());
-			writeServer = new PrintWriter(theSocket.getOutputStream());
+			//objectIn = new ObjectInputStream(theSocket.getInputStream());
+			//writeServer = new PrintWriter(theSocket.getOutputStream());
 		}
 		catch(IOException e)
 		{
+			System.out.println("Could not connect with server.");
 			e.printStackTrace();
+			System.exit(1);
 		}
+		System.out.println("Client connected with server");
 	}
 	
 	/*** Methods ***/
