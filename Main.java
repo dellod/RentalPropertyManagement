@@ -9,13 +9,16 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		if(CHOICE == "CLIENT")
+		switch(CHOICE)
 		{
-			ApplicationController.mainClient();
-		}
-		else if(CHOICE == "SERVER")
-		{
-			Server.mainServer();
+			case "CLIENT":
+				ApplicationController.mainClient();
+				break;
+			case "SERVER":
+				Server.mainServer();
+				break;
+			default:
+				System.out.println("Error in Main.java");
 		}
 	}
 }

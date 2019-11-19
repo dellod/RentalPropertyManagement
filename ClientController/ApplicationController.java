@@ -27,17 +27,17 @@ public class ApplicationController
 		System.out.println("Trying to connect to server...");
 		
 		// Add server connections here
-		try
+		//try
 		{
-			theSocket = new Socket(serverName, port);
+			//theSocket = new Socket(serverName, port);
 			//objectIn = new ObjectInputStream(theSocket.getInputStream());
 			//writeServer = new PrintWriter(theSocket.getOutputStream());
 		}
-		catch(IOException e)
+		//catch(IOException e)
 		{
-			System.out.println("Could not connect with server.");
-			e.printStackTrace();
-			System.exit(1);
+			//System.out.println("Could not connect with server.");
+			//e.printStackTrace();
+			//System.exit(1);
 		}
 		System.out.println("Client connected with server");
 	}
@@ -80,6 +80,16 @@ public class ApplicationController
 	private void communicateRenter()
 	{
 		System.out.println("running renter");
+		String renterType = msgFromGUI[1];
+		if(renterType == "REGISTERED")
+		{
+			System.out.println("User: " + msgFromGUI[2]);
+			System.out.println("Password: " + msgFromGUI[3]);
+		}
+		else if(renterType == "REGULAR")
+		{
+			System.out.println("no account");
+		}
 	}
 	
 	/*** Getters ***/
