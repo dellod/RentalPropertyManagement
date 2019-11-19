@@ -43,7 +43,7 @@ public class LandlordGUI extends Application
 	private void initialize() {
 		frmRentalPropertylandlord = new JFrame();
 		frmRentalPropertylandlord.setTitle("Rental Property (Landlord)");
-		frmRentalPropertylandlord.setBounds(100, 100, 450, 300);
+		frmRentalPropertylandlord.setBounds(100, 100, 650, 450);
 		frmRentalPropertylandlord.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
