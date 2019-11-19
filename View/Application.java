@@ -1,5 +1,7 @@
 package View;
 
+import ClientController.ApplicationController;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -14,18 +16,24 @@ import java.awt.Color;
 
 public class Application
 {
-
+	protected ApplicationController theClient;
 	private JFrame frmRentalProperty;
-
+	
+	public Application(ApplicationController c)
+	{
+		this.theClient = c;
+		initialize();
+	}
+	
 	/**
-	 * Launch the application.
+	 * Create and launch the application.
 	 */
-	public static void mainGUI() 
+	public static void mainGUI(ApplicationController c) 
 	{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
+					Application window = new Application(c);
 					window.frmRentalProperty.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,8 +64,8 @@ public class Application
 		btnManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				//TODO add implementation, open another window gui
 				System.out.println("Manager Selected");
+				theClient.msgFromGUI[0] = "Manager"; // Tells client it is behaving like a manager.
 				frmRentalProperty.dispose();
 				ManagerGUI mg = new ManagerGUI();
 				mg.ManagerScreen();
@@ -71,8 +79,8 @@ public class Application
 		btnLandlord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				//TODO add implementation, open another window gui
 				System.out.println("Landlord Selected");
+				theClient.msgFromGUI[0] = "Landlord"; // Tells client it is behaving like a landlord.
 				frmRentalProperty.dispose();
 				LandlordGUI lg = new LandlordGUI();
 				lg.LandlordScreen();
@@ -86,8 +94,8 @@ public class Application
 		btnRenter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				//TODO add implementation, open another window gui
 				System.out.println("Renter Selected");
+				theClient.msgFromGUI[0] = "Renter"; // Tells client it is behaving like a renter.
 				frmRentalProperty.dispose();
 				RenterGUI rg = new RenterGUI();
 				rg.RenterScreen();
