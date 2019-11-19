@@ -9,13 +9,13 @@ import java.net.Socket;
 // AKA Client
 public class ApplicationController 
 {
-	Application app;
+	Application app; // GUI
 	private Socket theSocket;
 	private ObjectInputStream objectIn;
 	private PrintWriter writeServer;
 	
 	private String userType; // User type: Manager, Landlord, or Renter
-	public String[] msgFromGUI;
+	public String[] msgFromGUI; // Buffer from GUI
 	
 	/*** Constructors ***/
 	public ApplicationController(String serverName, int port)

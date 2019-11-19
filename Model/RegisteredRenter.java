@@ -17,6 +17,7 @@ class RegisteredRenter extends Renter
 		this.profile = profile;
 	}
 	
+	
 	/*** Methods ***/
 	
 	/*** Getters ***/
