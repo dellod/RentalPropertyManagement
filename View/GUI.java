@@ -1,6 +1,0 @@
-package View;
-
-class GUI 
-{
-	
-}

@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-class LandlordGUI extends GUI
+public class LandlordGUI extends Application
 {
 
 	private JFrame frmRentalPropertylandlord;

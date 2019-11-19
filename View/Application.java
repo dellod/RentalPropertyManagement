@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Color;
 
-class Application extends GUI
+public class Application
 {
 
 	private JFrame frmRentalProperty;
@@ -20,7 +20,8 @@ class Application extends GUI
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void mainGUI() 
+	{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
