@@ -2,6 +2,7 @@ package ClientController;
 
 import View.*;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -23,7 +24,18 @@ public class ApplicationController
 		app = new Application(this);
 		userType = "GARBAGE";
 		msgFromGUI = new String[100]; //Buffer for Application GUI
+		
 		// Add server connections here
+		try
+		{
+			theSocket = new Socket(serverName, port);
+			objectIn = new ObjectInputStream(theSocket.getInputStream());
+			writeServer = new PrintWriter(theSocket.getOutputStream());
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/*** Methods ***/

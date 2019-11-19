@@ -15,7 +15,7 @@ public class Main
 		}
 		else if(CHOICE == "SERVER")
 		{
-			//return ModelController.mainServer();
+			Server.mainServer();
 		}
 	}
 }
