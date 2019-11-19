@@ -25,6 +25,7 @@ public class LandlordGUI extends Application
 				}
 			}
 		});
+		
 	}
 
 	/**
