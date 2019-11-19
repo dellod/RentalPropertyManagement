@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
+import ClientController.ApplicationController;
+
 public class RenterGUI extends Application
 {
 
@@ -12,11 +14,11 @@ public class RenterGUI extends Application
 	/**
 	 * Launch the application.
 	 */
-	public static void RenterScreen() {
+	public static void RenterScreen(ApplicationController c) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RenterGUI window = new RenterGUI();
+					RenterGUI window = new RenterGUI(c);
 					window.frmRentalPropertyrenter.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -28,7 +30,9 @@ public class RenterGUI extends Application
 	/**
 	 * Create the application.
 	 */
-	public RenterGUI() {
+	public RenterGUI(ApplicationController c) 
+	{
+		this.theClient = c;
 		initialize();
 	}
 
@@ -39,7 +43,7 @@ public class RenterGUI extends Application
 		frmRentalPropertyrenter = new JFrame();
 		frmRentalPropertyrenter.setTitle("Rental Property (Renter)");
 		frmRentalPropertyrenter.setBounds(100, 100, 450, 300);
-		frmRentalPropertyrenter.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmRentalPropertyrenter.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }

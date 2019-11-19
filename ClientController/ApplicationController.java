@@ -21,7 +21,7 @@ public class ApplicationController
 	public ApplicationController(String serverName, int port)
 	{
 		app = new Application(this);
-		userType = "";
+		userType = "GARBAGE";
 		msgFromGUI = new String[100]; //Buffer for Application GUI
 		// Add server connections here
 	}
@@ -32,6 +32,7 @@ public class ApplicationController
 		while(true) 
 		{
 			userType = msgFromGUI[0];
+			
 			if(userType == "Manager")
 			{
 				communicateManager();
@@ -50,6 +51,8 @@ public class ApplicationController
 	private void communicateManager()
 	{
 		System.out.println("running manager");
+		System.out.println(msgFromGUI[1]);
+		System.out.println(msgFromGUI[2]);
 	}
 	
 	private void communicateLandlord()

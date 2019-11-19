@@ -7,8 +7,13 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import ClientController.ApplicationController;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ManagerGUI extends Application
 {
@@ -20,11 +25,11 @@ public class ManagerGUI extends Application
 	/**
 	 * Launch the application.
 	 */
-	public static void ManagerScreen() {
+	public static void ManagerScreen(ApplicationController c) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ManagerGUI window = new ManagerGUI();
+					ManagerGUI window = new ManagerGUI(c);
 					window.frmRentalPropertymanager.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,14 +37,16 @@ public class ManagerGUI extends Application
 			}
 		});
 	}
-
+	
 	/**
-	 * Create the application.
+	 * Create and launch the application.
 	 */
-	public ManagerGUI() {
+	public ManagerGUI(ApplicationController c) 
+	{
+		this.theClient = c;
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -47,7 +54,7 @@ public class ManagerGUI extends Application
 		frmRentalPropertymanager = new JFrame();
 		frmRentalPropertymanager.setTitle("Rental Property (Manager)");
 		frmRentalPropertymanager.setBounds(100, 100, 650, 450);
-		frmRentalPropertymanager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmRentalPropertymanager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRentalPropertymanager.getContentPane().setLayout(null);
 		
 		JLabel lblWelcomeManager = new JLabel("Welcome Manager!");
@@ -80,6 +87,15 @@ public class ManagerGUI extends Application
 		frmRentalPropertymanager.getContentPane().add(passwordField);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				System.out.println(textField.getText());
+				System.out.println(passwordField.getPassword());
+				theClient.msgFromGUI[1] = textField.getText();
+				theClient.msgFromGUI[2] = new String(passwordField.getPassword());
+			}
+		});
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnLogin.setBounds(209, 243, 85, 21);
 		frmRentalPropertymanager.getContentPane().add(btnLogin);

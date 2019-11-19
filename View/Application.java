@@ -67,8 +67,8 @@ public class Application
 				System.out.println("Manager Selected");
 				theClient.msgFromGUI[0] = "Manager"; // Tells client it is behaving like a manager.
 				frmRentalProperty.dispose();
-				ManagerGUI mg = new ManagerGUI();
-				mg.ManagerScreen();
+				ManagerGUI mg = new ManagerGUI(theClient);
+				mg.ManagerScreen(theClient);
 			}
 		});
 		btnManager.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -82,8 +82,8 @@ public class Application
 				System.out.println("Landlord Selected");
 				theClient.msgFromGUI[0] = "Landlord"; // Tells client it is behaving like a landlord.
 				frmRentalProperty.dispose();
-				LandlordGUI lg = new LandlordGUI();
-				lg.LandlordScreen();
+				LandlordGUI lg = new LandlordGUI(theClient);
+				lg.LandlordScreen(theClient);
 			}
 		});
 		btnLandlord.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -97,8 +97,8 @@ public class Application
 				System.out.println("Renter Selected");
 				theClient.msgFromGUI[0] = "Renter"; // Tells client it is behaving like a renter.
 				frmRentalProperty.dispose();
-				RenterGUI rg = new RenterGUI();
-				rg.RenterScreen();
+				RenterGUI rg = new RenterGUI(theClient);
+				rg.RenterScreen(theClient);
 			}
 		});
 		btnRenter.setFont(new Font("Times New Roman", Font.PLAIN, 12));
