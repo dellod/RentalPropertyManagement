@@ -11,6 +11,7 @@ public class DataBase {
     	 
 	   myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "ensf480db");
        stm = myConn.createStatement();
+       
     }
    
    public boolean registerAccount(String username, String password) throws SQLException {
