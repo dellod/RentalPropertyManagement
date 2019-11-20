@@ -16,13 +16,18 @@ import java.awt.Color;
 
 public class Application
 {
-	public String msgFromClient[]; // Messages sent by client
+	public static String msgFromClient[]; // Messages sent by client
 	protected ApplicationController theClient;
 	private JFrame frmRentalProperty;
 	
 	public Application(ApplicationController c)
 	{
 		this.theClient = c;
+		msgFromClient = new String[100];
+		for(int i = 0; i < msgFromClient.length; i++)
+		{
+			msgFromClient[i] = "";
+		}
 		initialize();
 	}
 	

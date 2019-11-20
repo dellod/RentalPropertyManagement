@@ -1,5 +1,7 @@
 package View;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -387,7 +390,17 @@ public class PropertyRegistration extends LandlordGUI
 					theClient.msgFromGUI[23] = txtPropertyProvince.getText();
 					theClient.msgFromGUI[24] = txtPropertyCountry.getText();
 				}
-				frame.dispose();
+				
+				JFrame popup = new JFrame("Register Property");
+				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				JLabel statusLabel = new JLabel(msgFromClient[0], SwingConstants.CENTER);
+				msgFromClient[0] = "";
+				popup.setPreferredSize(new Dimension(300, 100));
+				popup.getContentPane().add(statusLabel, BorderLayout.CENTER);
+				popup.setLocationRelativeTo(frame);
+				popup.pack();
+				popup.setVisible(true);
+				//frame.dispose();
 			}
 		});
 		btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -399,6 +412,15 @@ public class PropertyRegistration extends LandlordGUI
 			public void actionPerformed(ActionEvent e) 
 			{
 				theClient.msgFromGUI[2] = "POST";
+				
+				if(chckbxFilledOutBefore.isSelected())
+				{
+	
+				}
+				else
+				{
+					
+				}
 			}
 		});
 		

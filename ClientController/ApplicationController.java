@@ -128,6 +128,7 @@ public class ApplicationController
 						
 						/* Cleanup */
 						flushOutGUIBuffer(3, 13);
+						app.msgFromClient[0] = "Property registered!"; // THIS NEED TO CHAGNE IF NOT SUCCESSFUL
 					}
 					else if(msgFromGUI[3] == "NOT_REGISTERED") // Landlord that does not exist in database yet.
 					{
@@ -171,9 +172,13 @@ public class ApplicationController
 						
 						/* Cleanup */
 						flushOutGUIBuffer(3, 24);
+						
+						app.msgFromClient[0] = "Property registered"; // NEEDS TO CHANGE IF NOT SUCCESSFUL
 					}
+					//Have to let GUI know if registration was successful or not.
+					
 				}
-				else if(msgFromGUI[2] == "STATE") // Selected change state on GUI
+				else if(msgFromGUI[2] == "POST") // Selected change state on GUI
 				{
 					
 				}
