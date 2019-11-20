@@ -16,6 +16,7 @@ import java.awt.Color;
 
 public class Application
 {
+	public String msgFromClient[]; // Messages sent by client
 	protected ApplicationController theClient;
 	private JFrame frmRentalProperty;
 	

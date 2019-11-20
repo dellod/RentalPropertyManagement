@@ -66,6 +66,7 @@ public class ApplicationController
 	
 	private void communicateManager()
 	{
+		
 		System.out.println("running manager");
 		System.out.println(msgFromGUI[1]);
 		System.out.println(msgFromGUI[2]);
@@ -75,6 +76,7 @@ public class ApplicationController
 	{
 
 		System.out.println("running landlord");
+		
 	}
 	
 	private void communicateRenter()
