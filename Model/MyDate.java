@@ -1,6 +1,6 @@
 package Model;
 
-class MyDate 
+public class MyDate 
 {
 	private int day;
 	private int month;

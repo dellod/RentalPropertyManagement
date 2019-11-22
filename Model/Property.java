@@ -1,7 +1,8 @@
 package Model;
 
-class Property 
-{
+public class Property 
+{	
+	private int ID;
 	private MyDate MyDateRegistered;
 	private Landlord owner;
 	private String houseType;
@@ -12,8 +13,9 @@ class Property
 	private Address address;
 	
 	/*** Constructors ***/
-	public Property(MyDate MyDateRegistered, Landlord owner, String houseType, int bathrooms, int bedrooms, boolean furnished, String state, Address address)
+	public Property(int ID,MyDate MyDateRegistered, Landlord owner, String houseType, int bathrooms, int bedrooms, boolean furnished, String state, Address address)
 	{
+		this.ID = ID;
 		this.MyDateRegistered = MyDateRegistered;
 		this.owner = owner;
 		this.houseType = houseType;

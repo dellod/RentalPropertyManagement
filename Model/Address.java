@@ -1,6 +1,6 @@
 package Model;
 
-class Address 
+public class Address 
 {
 	private String street;
 	private String city;
