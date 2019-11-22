@@ -7,24 +7,22 @@ class Address
 	private String country;
 	private String province;
 	private String quadrant;
-	private int homeNumber;
 	
 	/*** Constructors ***/
-	public Address(String street, String city, String country, String province, String quadrant, int homeNumber)
+	public Address(String street, String city, String country, String province, String quadrant)
 	{
 		this.street = street;
 		this.city = city;
 		this.country = country;
 		this.province = province;
 		this.quadrant = quadrant;
-		this.homeNumber = homeNumber;
 	}
 	
 	/*** Methods ***/
 	@Override
 	public String toString()
 	{
-		return (homeNumber + ", " + street + " " + quadrant + ", " + city + ", " + province + " " + country + "\n");
+		return (street + " " + quadrant + ", " + city + ", " + province + " " + country + "\n");
 	}
 	
 	/*** Getters ***/
@@ -51,10 +49,5 @@ class Address
 	public String getQuadrant()
 	{
 		return quadrant;
-	}
-	
-	public int getNumber()
-	{
-		return homeNumber;
 	}
 }
