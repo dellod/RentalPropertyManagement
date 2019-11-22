@@ -70,10 +70,14 @@ public class ApplicationController
 	
 	private void communicateManager()
 	{
-		
-		System.out.println("running manager");
-		System.out.println(msgFromGUI[1]);
-		System.out.println(msgFromGUI[2]);
+		//System.out.println("running manager");
+		if(msgFromGUI[1] == "LOGIN")
+		{
+			System.out.println(msgFromGUI[2]);
+			System.out.println(msgFromGUI[3]);
+			// VALIDATE IN HERE
+			flushOutGUIBuffer(1, 3);
+		}
 	}
 	
 	private void communicateLandlord()
@@ -184,6 +188,15 @@ public class ApplicationController
 				}
 				break;
 			case "STATE":
+				if(msgFromGUI[2] == "CHANGE")
+				{
+					int propertyIdToSearch = Integer.parseInt(msgFromGUI[3]);
+					String newState = msgFromGUI[4];
+					
+					System.out.println("Property ID: " + propertyIdToSearch);
+					System.out.println("New State: " + newState);
+					flushOutGUIBuffer(2, 4);
+				}
 				break;
 			default:
 				break;

@@ -90,8 +90,9 @@ public class ManagerGUI extends Application
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				theClient.msgFromGUI[1] = textField.getText();
-				theClient.msgFromGUI[2] = new String(passwordField.getPassword());
+				theClient.msgFromGUI[1] = "LOGIN";
+				theClient.msgFromGUI[2] = textField.getText();
+				theClient.msgFromGUI[3] = new String(passwordField.getPassword());
 			}
 		});
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 12));

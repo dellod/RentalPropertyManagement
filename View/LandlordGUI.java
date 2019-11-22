@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,6 +9,8 @@ import ClientController.ApplicationController;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -70,7 +73,42 @@ public class LandlordGUI extends Application
 			public void actionPerformed(ActionEvent e) 
 			{
 				theClient.msgFromGUI[1] = "STATE";
-				JFrame changeState = new JFrame("Register Property");
+
+				JFrame changeState = new JFrame("State of Property");
+				changeState.setPreferredSize(new Dimension(300, 150));
+				changeState.setLocationRelativeTo(frmRentalPropertylandlord);
+				changeState.getContentPane().setLayout(null);
+				
+				JLabel lblpropId = new JLabel("Property ID: ");
+				lblpropId.setBounds(5, 5, 178, 19);
+				JTextField txtPropertyID = new JTextField();
+				txtPropertyID.setBounds(100, 5, 178, 19);
+				JLabel lblState = new JLabel("New State: ");
+				lblState.setBounds(5, 35, 178, 19);
+				JTextField txtNewState = new JTextField();
+				txtNewState.setBounds(100, 35, 178, 19);
+				JButton btnChange = new JButton("Change");
+				
+				btnChange.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) 
+					{
+						theClient.msgFromGUI[2] = "CHANGE";
+						theClient.msgFromGUI[3] = txtPropertyID.getText();
+						theClient.msgFromGUI[4] = txtNewState.getText();
+					}
+				});
+				btnChange.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				btnChange.setBounds(50, 65, 100, 20);
+				
+				changeState.getContentPane().add(btnChange);
+				changeState.getContentPane().add(lblpropId);
+				changeState.getContentPane().add(txtPropertyID);
+				changeState.getContentPane().add(lblState);
+				changeState.getContentPane().add(txtNewState);
+				
+				changeState.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				changeState.pack();
+				changeState.setVisible(true);
 			}
 		});
 		btnState.setFont(new Font("Tahoma", Font.PLAIN, 12));
