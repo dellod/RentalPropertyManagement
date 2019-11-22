@@ -2,7 +2,7 @@ package Model;
 
 class Property 
 {
-	private Date dateRegistered;
+	private MyDate MyDateRegistered;
 	private Landlord owner;
 	private String houseType;
 	private int numBathrooms;
@@ -12,9 +12,9 @@ class Property
 	private Address address;
 	
 	/*** Constructors ***/
-	public Property(Date dateRegistered, Landlord owner, String houseType, int bathrooms, int bedrooms, boolean furnished, String state, Address address)
+	public Property(MyDate MyDateRegistered, Landlord owner, String houseType, int bathrooms, int bedrooms, boolean furnished, String state, Address address)
 	{
-		this.dateRegistered = dateRegistered;
+		this.MyDateRegistered = MyDateRegistered;
 		this.owner = owner;
 		this.houseType = houseType;
 		this.numBathrooms = bathrooms;
@@ -33,9 +33,9 @@ class Property
 	}
 	
 	/*** Getters ***/
-	public Date getDate()
+	public MyDate getMyDate()
 	{
-		return dateRegistered;
+		return MyDateRegistered;
 	}
 	
 	public Landlord getOwner()

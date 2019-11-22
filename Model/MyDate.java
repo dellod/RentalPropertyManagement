@@ -1,18 +1,18 @@
 package Model;
 
-class Date 
+class MyDate 
 {
 	private int day;
 	private int month;
 	private int year;
 	
 	/*** Constructors ***/
-	public Date()
+	public MyDate()
 	{
 		setCurrentDate();
 	}
 	
-	public Date(int day, int month, int year)
+	public MyDate(int day, int month, int year)
 	{
 		this.day = day;
 		this.month = month;

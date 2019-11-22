@@ -3,12 +3,12 @@ package Model;
 abstract class Person 
 {
 	private Name fullName;
-	private Date birthday;
+	private MyDate birthday;
 	private String gender;
 	private Address home;
 	
 	/*** Constructor ***/
-	public Person(Name fullName, Date birthday, String gender, Address home)
+	public Person(Name fullName, MyDate birthday, String gender, Address home)
 	{
 		this.fullName = fullName;
 		this.birthday = birthday;
@@ -23,7 +23,7 @@ abstract class Person
 		return fullName;
 	}
 	
-	public Date getBirthdate()
+	public MyDate getBirthdate()
 	{
 		return birthday;
 	}

@@ -5,7 +5,7 @@ class Manager extends Person
 	private Account profile;
 	
 	/*** Constructors ***/
-	public Manager(Name fullName, Date birthday, String gender, Address home, Account profile) 
+	public Manager(Name fullName, MyDate birthday, String gender, Address home, Account profile) 
 	{
 		super(fullName, birthday, gender, home);
 		this.profile = profile;

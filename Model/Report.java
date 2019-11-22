@@ -8,7 +8,7 @@ class Report
 	private int numHousesRented;
 	private int numActiveListings;
 	private ArrayList<Property> listRented;
-	private Date reportDate;
+	private MyDate reportDate;
 	
 	/*** Constructors ***/
 	public Report(int houseListings, int housesRented, int activeListings, ArrayList<Property> list)

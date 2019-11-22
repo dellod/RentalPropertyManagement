@@ -8,7 +8,7 @@ class Landlord extends Person
 	private ArrayList<Property> propertysOwned;
 	
 	/*** Constructors ***/
-	public Landlord(Name fullName, Date birthday, String gender, Address home, String email, ArrayList<Property> propertysOwned) 
+	public Landlord(Name fullName, MyDate birthday, String gender, Address home, String email, ArrayList<Property> propertysOwned) 
 	{
 		super(fullName, birthday, gender, home);
 		this.email = email;

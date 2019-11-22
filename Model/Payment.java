@@ -4,20 +4,20 @@ class Payment
 {
 	private double amount;
 	private Landlord landlord;
-	private Date dateOfPayment;
+	private MyDate MyDateOfPayment;
 	
 	/*** Constructors ***/
-	public Payment(double amount, Landlord landlord, Date d)
+	public Payment(double amount, Landlord landlord, MyDate d)
 	{
 		this.amount = amount;
 		this.landlord = landlord;
-		this.dateOfPayment = d;
+		this.MyDateOfPayment = d;
 	}
 	
 	/*** Methods ***/
 	public String toString()
 	{
-		return ("Payment Amount: $" + amount + ". Date: " + dateOfPayment);
+		return ("Payment Amount: $" + amount + ". MyDate: " + MyDateOfPayment);
 	}
 	
 	/*** Getters ***/
@@ -31,9 +31,9 @@ class Payment
 		return landlord;
 	}
 	
-	public Date getDate()
+	public MyDate getMyDate()
 	{
-		return dateOfPayment;
+		return MyDateOfPayment;
 	}
 	
 }

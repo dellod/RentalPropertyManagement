@@ -3,7 +3,7 @@ package Model;
 abstract class Renter extends Person
 {
 
-	public Renter(Name fullName, Date birthday, String gender, Address home) 
+	public Renter(Name fullName, MyDate birthday, String gender, Address home) 
 	{
 		super(fullName, birthday, gender, home);
 	}

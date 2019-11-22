@@ -9,7 +9,7 @@ class RegisteredRenter extends Renter
 	private Account profile; // Not sure if we need this.
 	
 	/*** Constructors ***/
-	public RegisteredRenter(Name fullName, Date birthday, String gender, Address home, String email, ArrayList<Property> cart, Account profile) 
+	public RegisteredRenter(Name fullName, MyDate birthday, String gender, Address home, String email, ArrayList<Property> cart, Account profile) 
 	{
 		super(fullName, birthday, gender, home);
 		this.email = email;

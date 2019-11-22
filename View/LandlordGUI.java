@@ -70,7 +70,7 @@ public class LandlordGUI extends Application
 			public void actionPerformed(ActionEvent e) 
 			{
 				theClient.msgFromGUI[1] = "STATE";
-				
+				JFrame changeState = new JFrame("Register Property");
 			}
 		});
 		btnState.setFont(new Font("Tahoma", Font.PLAIN, 12));
