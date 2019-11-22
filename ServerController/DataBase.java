@@ -32,6 +32,7 @@ public class DataBase {
    }
    public void convertToProperty(ResultSet rs) throws SQLException {
 	   while (rs.next()) {
+		   
 		   int ID = rs.getInt("ID");
 		   Date d = rs.getDate("regDate");
 		   String type2 = rs.getString("type");
