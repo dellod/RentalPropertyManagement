@@ -70,6 +70,7 @@ public class LandlordGUI extends Application
 			public void actionPerformed(ActionEvent e) 
 			{
 				theClient.msgFromGUI[1] = "STATE";
+				
 			}
 		});
 		btnState.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -78,7 +79,7 @@ public class LandlordGUI extends Application
 		
 		JLabel lblWelcomeLandlord = new JLabel("Welcome Landlord!");
 		lblWelcomeLandlord.setFont(new Font("Segoe UI Black", Font.BOLD | Font.ITALIC, 20));
-		lblWelcomeLandlord.setBounds(211, 81, 206, 39);
+		lblWelcomeLandlord.setBounds(211, 81, 254, 39);
 		frmRentalPropertylandlord.getContentPane().add(lblWelcomeLandlord);
 	}
 }
