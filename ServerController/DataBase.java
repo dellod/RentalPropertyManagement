@@ -8,14 +8,51 @@ import Model.*;
 public class DataBase {
 	Connection myConn;
     Statement stm;
+    private static DataBase singleton;
     
-   public DataBase() throws SQLException{
+  	private DataBase() throws SQLException{
     	
     	 
 	   myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "ensf480db");
        stm = myConn.createStatement();
        
     }
+  	
+  	public static DataBase getDataBase() throws SQLException {
+  		
+  		if(singleton == null) {
+  			singleton = new DataBase();
+  		}
+  		 return singleton;
+  		
+  	}
+   
+   public Report generateReport(MyDate a,MyDate b) throws SQLException {
+
+	   
+	   String query = "select count(*) from Property where regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
+	   ResultSet rs = stm.executeQuery(query);
+	   rs.next();
+	   int numList = rs.getInt("count(*)");
+	   
+	   query = "select count(*) from Property where state = 'rented' and regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
+	   rs = stm.executeQuery(query);
+	   rs.next();
+	   int numRented = rs.getInt("count(*)");
+	   
+	   query = "select * from Property where state = 'rented' and regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
+	   rs = stm.executeQuery(query); 
+	   ArrayList<Property> rentedProperty = convertToProperty(rs);
+	   
+	   query = "select count(*) from Property where state = 'active' and regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
+	   rs = stm.executeQuery(query);
+	   rs.next();
+	   int numActive = rs.getInt("count(*)");
+	   
+	   Report r = new Report(numList,numRented,numActive,rentedProperty);
+	   
+	   return r;
+   }
    public boolean loginRenter(String username, String password) throws SQLException {
 	   String query = "select username from Account where username = " + username + "and password = " + password + ")";
 	   return  stm.execute(query);
@@ -24,6 +61,10 @@ public class DataBase {
 	   String query = "select username from Manager where username = " + username + "and password = " + password + ")";
 	   return  stm.execute(query);
 	   
+   }
+   public void getAllUserName() {
+	   //String query = "select username from Account where username = " + username + "and password = " + password + ")";
+	  //return  stm.execute(query);
    }
    public boolean registerAccount(String username, String password) throws SQLException {
 	   

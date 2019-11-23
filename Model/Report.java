@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-class Report 
+public class Report 
 {
 	private int numHouseListings;
 	private int numHousesRented;
