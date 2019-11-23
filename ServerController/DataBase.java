@@ -26,7 +26,54 @@ public class DataBase {
   		 return singleton;
   		
   	}
-   
+   public void getNotification(RegisteredRenter r) throws SQLException{
+	   
+	   ArrayList<Property> cart = new ArrayList<Property>();
+	   String query = "selct type from regrenter where email = "+r.getEmai();
+	   ResultSet rs = stm.executeQuery(query);
+	   rs.next();
+	   String s = rs.getString("type");
+	   
+	   cart.addAll(searchByType(s));
+	   
+	   query = "selct numBath from regrenter where email = "+r.getEmai();
+	   rs = stm.executeQuery(query);
+	   rs.next();
+	   int numBath = rs.getInt("numBath");
+	   
+	   cart.addAll(searchByBath(numBath));
+	   
+	   
+	   query = "selct numBed from regrenter where email = "+r.getEmai();
+	   rs = stm.executeQuery(query);
+	   rs.next();
+	   int numBed = rs.getInt("numBed");
+	   
+	   cart.addAll(searchByBed(numBed));
+	   
+	   query = "selct furnished from regrenter where email = "+r.getEmai();
+	   rs = stm.executeQuery(query);
+	   rs.next();
+	   boolean furnished = rs.getBoolean("furnished");
+	   int furnish;
+	   if(furnished) {
+		   furnish = 1;
+	   }
+	   else {
+		   furnish = 0;
+	   }
+	   cart.addAll(searchByFurnish(furnish));
+	   
+	   
+	   query = "selct quadrant from regrenter where email = "+r.getEmai();
+	   rs = stm.executeQuery(query);
+	   rs.next();
+	   String quadrant = rs.getString("quadrant");
+	   
+	   cart.addAll(searchByQuadrant(quadrant));
+	   
+	   r.setCart(cart);
+   }
    public Report generateReport(MyDate a,MyDate b) throws SQLException {
 
 	   

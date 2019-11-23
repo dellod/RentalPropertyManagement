@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-class RegisteredRenter extends Renter
+public class RegisteredRenter extends Renter
 {
 	private String email;
 	private ArrayList<Property> propertyCart;
@@ -35,5 +35,8 @@ class RegisteredRenter extends Renter
 	{
 		return profile;
 	}
-	
+	/*** Setter ***/
+	public void setCart(ArrayList<Property> p) {
+		propertyCart = p;
+	}
 }
