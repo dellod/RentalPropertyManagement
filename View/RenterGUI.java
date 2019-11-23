@@ -91,6 +91,12 @@ public class RenterGUI extends Application
 				theClient.msgFromGUI[1] = "REGISTERED";
 				theClient.msgFromGUI[2] = textField.getText();
 				theClient.msgFromGUI[3] = new String(passwordField.getPassword());
+				// IF VERIFIED THEN...
+				frmRentalPropertyrenter.dispose();
+				RegisteredRenter rg = new RegisteredRenter(theClient);
+				rg.RegisteredRenterScreen(theClient);
+				
+				
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -102,6 +108,10 @@ public class RenterGUI extends Application
 			public void actionPerformed(ActionEvent e) 
 			{
 				theClient.msgFromGUI[1] = "REGULAR";
+
+				frmRentalPropertyrenter.dispose();
+				RegularRenter rr = new RegularRenter(theClient);
+				rr.RegularRenterScreen(theClient);
 			}
 		});
 		btnContinue.setFont(new Font("Tahoma", Font.PLAIN, 12));

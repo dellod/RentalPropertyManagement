@@ -93,6 +93,11 @@ public class ManagerGUI extends Application
 				theClient.msgFromGUI[1] = "LOGIN";
 				theClient.msgFromGUI[2] = textField.getText();
 				theClient.msgFromGUI[3] = new String(passwordField.getPassword());
+				// IF VALID LOGIN THEN...
+				
+				frmRentalPropertymanager.dispose();
+				Manager m = new Manager(theClient);
+				m.ManagerMenuScreen(theClient);
 			}
 		});
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 12));

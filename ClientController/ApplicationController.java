@@ -206,12 +206,13 @@ public class ApplicationController
 	
 	private void communicateRenter()
 	{
-		System.out.println("running renter");
+		//System.out.println("running renter");
 		String renterType = msgFromGUI[1];
 		if(renterType == "REGISTERED")
 		{
 			System.out.println("User: " + msgFromGUI[2]);
 			System.out.println("Password: " + msgFromGUI[3]);
+			flushOutGUIBuffer(1, 4);
 		}
 		else if(renterType == "REGULAR")
 		{
