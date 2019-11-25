@@ -1,6 +1,9 @@
 package ServerController;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -9,6 +12,8 @@ import java.util.concurrent.Executors;
 public class Server 
 {
 	private ServerSocket serverSocket;
+	private ObjectOutputStream objectOut;
+	private BufferedReader socketIn;
 	
 	/*** Constructors ***/
 	public Server(int port)
@@ -32,6 +37,8 @@ public class Server
 			{
 				System.out.println("Waiting to accept...");
 				Socket ss = serverSocket.accept();
+				socketIn = new BufferedReader(new InputStreamReader(ss.getInputStream()));
+				objectOut = new ObjectOutputStream(ss.getOutputStream());
 				System.out.println("Accepted! Client: " + ss.toString());
 			} 
 			catch (IOException e) 
@@ -46,7 +53,7 @@ public class Server
 	
 	public static void mainServer()
 	{
-		Server s = new Server(8099);
+		Server s = new Server(4000);
 		s.communicate();
 	}
 }
