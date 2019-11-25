@@ -52,6 +52,7 @@ public class Server
 				input = socketIn.readLine();
 				
 				switch(input) {
+				
 					
 				case "REGISTERED":
 					registered();
