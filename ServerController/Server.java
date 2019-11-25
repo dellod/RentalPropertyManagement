@@ -44,6 +44,7 @@ public class Server
 			catch (IOException e) 
 			{
 				e.printStackTrace();
+				
 			}
 			String input;
 			try {
