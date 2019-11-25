@@ -45,12 +45,26 @@ public class Server
 			{
 				e.printStackTrace();
 			}
+			String input;
+			try {
 			while(true) {
+				input = socketIn.readLine();
 				
+				switch(input) {
+					
+				case "REGISTERED":
+					registered();
+				}
+			}
+			}
+			catch(IOException e) {
+				e.printStackTrace();
 			}
 		
 	}
-	
+	public void registered() {
+		
+	}
 	public static void mainServer()
 	{
 		Server s = new Server(4000);
