@@ -92,11 +92,20 @@ public class RenterGUI extends Application
 				theClient.msgFromGUI[2] = textField.getText();
 				theClient.msgFromGUI[3] = new String(passwordField.getPassword());
 				// IF VERIFIED THEN...
-				frmRentalPropertyrenter.dispose();
-				RegisteredRenter rg = new RegisteredRenter(theClient);
-				rg.RegisteredRenterScreen(theClient);
-				
-				
+				//while(msgFromClient[0] == "") {System.out.println(msgFromClient[0]);}
+				waitForMsg(0);
+				if(msgFromClient[0] == "NOT_VALID")
+				{
+					infoBox("Invalid login information, please try again.", "Try again");
+					msgFromClient[0] = "";
+				}
+				else if(msgFromClient[0] == "VALID")
+				{
+					frmRentalPropertyrenter.dispose();
+					RegisteredRenter rg = new RegisteredRenter(theClient);
+					rg.RegisteredRenterScreen(theClient);
+					msgFromClient[0] = "";
+				}
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));

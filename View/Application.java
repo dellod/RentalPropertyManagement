@@ -12,11 +12,13 @@ import java.awt.GridLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 
 public class Application
 {
-	public static String msgFromClient[]; // Messages sent by client
+	public static volatile String msgFromClient[]; // Messages sent by client
 	protected ApplicationController theClient;
 	private JFrame frmRentalProperty;
 	
@@ -126,4 +128,24 @@ public class Application
 		lblEnsfGroup.setBounds(124, 306, 351, 13);
 		frmRentalProperty.getContentPane().add(lblEnsfGroup);
 	}
+	
+	protected void flushCLientBuffer(int start, int end)
+	{
+		for(int i = start; i <= end; i++)
+		{
+			msgFromClient[i] = "";
+		}
+	}
+	
+	protected void waitForMsg(int index)
+	{
+		while(msgFromClient[index] == "") {
+			//System.out.println(msgFromClient[index]);
+		}
+	}
+	
+	protected void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
 }

@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import Model.*;
 
 // AKA Client
 public class ApplicationController 
@@ -218,44 +221,42 @@ public class ApplicationController
 	{
 		//System.out.println("running renter");
 		String renterType = msgFromGUI[1];
+		sendString(renterType);
 		if(renterType == "REGISTERED")
 		{
-			//System.out.println("User: " + msgFromGUI[2]);
-			//System.out.println("Password: " + msgFromGUI[3]);
-			//flushOutGUIBuffer(2, 3);
 			sendString(renterType);
+			
 			String renterUsername = msgFromGUI[2];
 			String renterPass = msgFromGUI[3];
-			//writeServer.println(renterUsername+","+renterPass);
-			//writeServer.println(renterUsername);
-			//writeServer.println(renterPass);
 			sendString(renterUsername);
-			//sendString(renterPass);
+			sendString(renterPass);
 			
-			String userResult;
-			while(true) {
-				userResult = bfReader.readLine();
-			if(userResult == "enterpassword")
-				sendString(renterPass);
-				break;
-			}
-			System.out.println(userResult);
-			/*if(PASS)
+			boolean userResult = objectIn.readBoolean();
+			//System.out.println(userResult);
+			if(userResult)
 			{
 				//write to GUI that it is okay to go to next window.
+				app.msgFromClient[0] = "VALID";
 			}
-			//else
+			else
 			{
 				//write to GUI that it is not okay to go to next window.
-			}*/
-
+				app.msgFromClient[0] = "NOT_VALID";
+		
+			}
+			
+			ArrayList<Property> properties = (ArrayList<Property>) objectIn.readObject();
+			for(int i = 0; i < properties.size(); i++)
+			{
+				System.out.println(properties.get(i));
+			}
+			
 			String regRenterOption = msgFromGUI[4];
 			switch(regRenterOption)
 			{
 				case("NOTIFICATIONS"):
 					break;
 				case("SEARCH_AND_SAVE"):
-					//System.out.println("seacrchifafsafsng");
 					if(msgFromGUI[5] == "SEARCH")
 					{
 						System.out.println("Search button has been pressed.");
@@ -399,7 +400,7 @@ public class ApplicationController
 	
 	public static void mainClient() throws ClassNotFoundException, IOException
 	{
-		ApplicationController client = new ApplicationController("localhost", 4000);
+		ApplicationController client = new ApplicationController("10.13.128.70", 4000);
 		client.getApp().mainGUI(client); // Launches GUI.
 		client.initalizeThenRun();
 	}
