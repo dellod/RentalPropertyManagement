@@ -68,6 +68,7 @@ public class Server
 				
 					
 				case "Renter":
+					//System.out.println("IN RENTER");
 					renter();
 					break;
 				}
@@ -79,32 +80,43 @@ public class Server
 		
 	}
 	public void renter() throws IOException, SQLException {
-		String input = socketIn.readLine();
+		String input = socketIn.readLine(); 
+		while(true) {
+			 input = socketIn.readLine();
+			//System.out.println("INPUT IN RENTER "+input);
 		switch (input) {
 		
 		case "REGULAR":
 			//System.out.println("TEST");
 			break;
 		case "REGISTERED":
-			//System.out.println("TES2222222222222222T");
-			String username = socketIn.readLine();
-			String password = socketIn.readLine();
-			System.out.println("TEST");
-			if(modelController.getDataBase().loginRenter(username, password)){
-			printWriter.println("true");
-			printWriter.flush();
-			System.out.print("true");
-			
-			}
-			else{
-			printWriter.println("false");
-			System.out.print("false");
-			printWriter.flush();
-			}
+			registeredRenter();
+			break;
+				
+		}
 		}
 	}
-	public void registeredRenter() {
+	public void registeredRenter() throws IOException, SQLException {
+		wait("REGISTERED");
 		
+		String username = socketIn.readLine();
+		String password = socketIn.readLine();
+		if(modelController.getDataBase().loginRenter(username, password)){
+		objectOut.writeBoolean(true);
+		objectOut.flush();
+		System.out.println("true");
+		objectOut.writeObject(modelController.getAllProperty());
+		objectOut.flush();
+		
+		}
+		else{
+		objectOut.writeBoolean(false);
+		objectOut.flush();
+		System.out.println("false");
+		}
+	}
+	public void wait(String s) throws IOException {
+		while(socketIn.readLine() == s) {}
 	}
 	public static void mainServer() throws SQLException
 	{

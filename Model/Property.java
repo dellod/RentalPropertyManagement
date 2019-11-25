@@ -1,6 +1,8 @@
 package Model;
 
-public class Property 
+import java.io.Serializable;
+
+public class Property implements Serializable
 {	
 	private int ID;
 	private MyDate MyDateRegistered;

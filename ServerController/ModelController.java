@@ -15,6 +15,9 @@ public class ModelController {
 		
 		dataBase = DataBase.getDataBase();
 	}
+	public ArrayList<Property> getAllProperty() throws SQLException{
+		return dataBase.getAllProperty();
+	}
 	public Report generateReport(MyDate start,MyDate end) throws SQLException {
 		
 		return dataBase.generateReport(start, end);

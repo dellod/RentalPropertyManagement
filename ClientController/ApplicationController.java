@@ -226,10 +226,19 @@ public class ApplicationController
 			sendString(renterType);
 			String renterUsername = msgFromGUI[2];
 			String renterPass = msgFromGUI[3];
+			//writeServer.println(renterUsername+","+renterPass);
+			//writeServer.println(renterUsername);
+			//writeServer.println(renterPass);
 			sendString(renterUsername);
-			sendString(renterPass);
+			//sendString(renterPass);
 			
-			String userResult = bfReader.readLine();
+			String userResult;
+			while(true) {
+				userResult = bfReader.readLine();
+			if(userResult == "enterpassword")
+				sendString(renterPass);
+				break;
+			}
 			System.out.println(userResult);
 			/*if(PASS)
 			{
@@ -390,7 +399,7 @@ public class ApplicationController
 	
 	public static void mainClient() throws ClassNotFoundException, IOException
 	{
-		ApplicationController client = new ApplicationController("10.13.114.150", 4000);
+		ApplicationController client = new ApplicationController("localhost", 4000);
 		client.getApp().mainGUI(client); // Launches GUI.
 		client.initalizeThenRun();
 	}

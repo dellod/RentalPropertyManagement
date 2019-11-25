@@ -110,11 +110,21 @@ public class DataBase {
 	   return r;
    }
    public boolean loginRenter(String username, String password) throws SQLException {
-	   String query = "Select username from Account where username = '" + username + "' and password = '" + password + "'";
-	   //String query = "Select username from Account where username = 'willhuang' and password = 'willhuang'";
-	   System.out.println("TTTTTTTTTTTTTTTt");
+	  // System.out.println("this is username :"+username);
+	   //System.out.println("this is pass"+password);
+	   String query = "Select username from account where username = '" + username + "' and password = '" + password + "'";
+	   //String query = "Select username from account where username = 'willhuang' and password = 'willhuang'";
+	  // String query = "Select username from account where username = '" + username + "' and password = '" + password + "'";
+	   //System.out.println("TTTTTTTTTTTTTTTt");
 	   //System.out.println(stm.execute(query));
-	   ResultSet rs = stm.executeQuery(query);
+	   //if(stm.execute(query))
+		 //  return true;
+	   //else 
+		 //  return false;
+	  ResultSet rs = stm.executeQuery(query);
+	   //rs.next();
+	  // String username1 = rs.getString("username");
+	  // System.out.println(username1);
 	   if(rs.next())
 		   return true;
 	   else 
@@ -122,7 +132,7 @@ public class DataBase {
 	 //  return  stm.execute(query);
    }
    public boolean loginManager(String username, String password) throws SQLException {
-	   String query = "select username from Manager where username = " + username + "and password = " + password + ")";
+	   String query = "select username from Manager where username = '" + username + "'and password = '" + password + "'";
 	   return  stm.execute(query);
 	   
    }
@@ -130,13 +140,19 @@ public class DataBase {
 	   //String query = "select username from Account where username = " + username + "and password = " + password + ")";
 	  //return  stm.execute(query);
    }
+   public ArrayList<Property> getAllProperty() throws SQLException {
+	   String query = "select * from property";
+	   ResultSet rs = stm.executeQuery(query);
+	   return  convertToProperty(rs);
+	   
+   }
    public boolean registerAccount(String username, String password) throws SQLException {
 	   
-	   String query = "select username from Account where username = " + username;
+	   String query = "select username from Account where username = '" + username+"'";
 	   
 	   //ResultSet rs = stm.executeQuery(query);
 	   if(stm.execute(query) == false) {
-		   query ="insert into Account (username, password) values (" + username+ ", "+ password + ")";
+		   query ="insert into Account (username, password) values ('" + username+ "', '"+ password + "')";
 		   stm.execute(query);
 		   return true;
 	   }
@@ -149,7 +165,7 @@ public class DataBase {
    
    public boolean registerProperty(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, String date, int gender) throws SQLException {
 	   String query = "insert into Property (type,numBath,numBed,furnished,state,addressStreet,addressCity,addressCountry,addressProvince,addressQuadrant,ownerFname,ownerLname,ownerEmail,ownerBirthday,gender)"
-	   		+ " values (" +  type + ", "+ Integer.toString(numBath)+", "+ Integer.toString(numBed)+", "+ Integer.toString(furnished)+", "+ state+", "+street+", "+city+", "+country+", "+province+", "+quadrant+", "+Fname+", "+Lname+", "+email+", DATE '"+date+"', "+Integer.toString(gender)+")";
+	   		+ " values ('" +  type + "', '"+ Integer.toString(numBath)+"', '"+ Integer.toString(numBed)+"', '"+ Integer.toString(furnished)+"', '"+ state+"', '"+street+"', '"+city+"', '"+country+"', '"+province+"', '"+quadrant+"', '"+Fname+"', '"+Lname+"', '"+email+"', DATE '"+date+"', '"+Integer.toString(gender)+"')";
 	   if(stm.execute(query))
 		   return true;
 	   else {

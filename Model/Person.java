@@ -1,6 +1,8 @@
 package Model;
 
-abstract class Person 
+import java.io.Serializable;
+
+abstract class Person implements Serializable
 {
 	private Name fullName;
 	private MyDate birthday;

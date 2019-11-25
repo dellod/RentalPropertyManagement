@@ -8,7 +8,7 @@ import View.*;
 public class Main 
 {
 	public static String[] OPTIONS = {"CLIENT", "SERVER"};
-	public static String CHOICE = OPTIONS[0];
+	public static String CHOICE = OPTIONS[1];
 	
 	public static void main(String[] args) throws ClassNotFoundException, IOException, SQLException
 	{
