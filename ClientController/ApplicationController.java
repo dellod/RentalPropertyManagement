@@ -29,12 +29,15 @@ public class ApplicationController
 			msgFromGUI[i] = "";
 		}
 		System.out.println("Trying to connect to server...");
-		
+		/*
 		// Add server connections here
 		try
 		{
 			theSocket = new Socket(serverName, port);
+			System.out.println("\tCreated socket!");
+
 			objectIn = new ObjectInputStream(theSocket.getInputStream());
+			System.out.println("\tCreated object input stream!");
 			writeServer = new PrintWriter(theSocket.getOutputStream());
 		}
 		catch(IOException e)
@@ -42,7 +45,7 @@ public class ApplicationController
 			System.out.println("Could not connect with server.");
 			e.printStackTrace();
 			System.exit(1);
-		}
+		}*/
 		System.out.println("Client connected with server");
 	}
 	
@@ -352,7 +355,7 @@ public class ApplicationController
 	
 	public static void mainClient()
 	{
-		ApplicationController client = new ApplicationController("localhost", 8099);
+		ApplicationController client = new ApplicationController("localhost", 4000);
 		client.getApp().mainGUI(client); // Launches GUI.
 		client.initalizeThenRun();
 	}

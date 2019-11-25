@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,13 +13,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class TESTING_REMOVELATER {
 
-	private JFrame emailWindow;
-	private JTextField txtEmail;
+	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -46,29 +50,47 @@ public class TESTING_REMOVELATER {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		emailWindow = new JFrame();
-		emailWindow.setTitle("Send Email");
-		emailWindow.setBounds(100, 100, 450, 300);
-		emailWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		emailWindow.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setTitle("Send Email");
+		frame.setBounds(100, 100, 650, 450);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
-		JLabel lblWriteEmailTo = new JLabel("Write email to landlord below (email of landlord will not be shown).");
-		lblWriteEmailTo.setBounds(10, 10, 416, 13);
-		emailWindow.getContentPane().add(lblWriteEmailTo);
+		JLabel lblSelected = new JLabel("Selected:");
+		lblSelected.setBounds(10, 387, 148, 13);
+		frame.getContentPane().add(lblSelected);
+		JTextField selectedText = new JTextField();
+		selectedText.setText("Please select object to examine above.");
+		selectedText.setEditable(false);
+		selectedText.setBounds(131, 384, 351, 19);
+		frame.getContentPane().add(selectedText);
+		selectedText.setColumns(10);
 		
-		txtEmail = new JTextField();
-		txtEmail.setBounds(10, 33, 416, 194);
-		emailWindow.getContentPane().add(txtEmail);
-		txtEmail.setColumns(10);
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		JList<String> list = new JList<String>(listModel);
+		listModel.addElement("Examine Properties Below");
+		list.setBounds(10, 63, 472, 248);
+		list.setVisibleRowCount(20);
 		
-		JButton btnSendEmail = new JButton("Send Email");
-		btnSendEmail.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		list.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				int index = list.getSelectedIndex();
+				String line = (String) listModel.get(index);
+				selectedText.setText(line); // Displays selected text to textField at bottom of RegisteredRenter GUI.
 			}
 		});
-		btnSendEmail.setBounds(10, 237, 85, 21);
-		emailWindow.getContentPane().add(btnSendEmail);
 		
+		frame.getContentPane().add(list);
 		
+		JButton btnLogout = new JButton("Logout"); 
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0); // Terminates program
+			}
+		});
+		btnLogout.setBounds(516, 24, 110, 21);
+		frame.getContentPane().add(btnLogout);
 	}
 }
