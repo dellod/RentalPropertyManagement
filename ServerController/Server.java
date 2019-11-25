@@ -27,8 +27,7 @@ public class Server
 	/*** Methods ***/
 	public void communicate() 
 	{
-		while(true)
-		{
+		
 			try 
 			{
 				System.out.println("Waiting to accept...");
@@ -39,7 +38,10 @@ public class Server
 			{
 				e.printStackTrace();
 			}
-		}
+			while(true) {
+				
+			}
+		
 	}
 	
 	public static void mainServer()

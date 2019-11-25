@@ -31,17 +31,17 @@ public class ApplicationController
 		System.out.println("Trying to connect to server...");
 		
 		// Add server connections here
-		//try
+		try
 		{
-			//theSocket = new Socket(serverName, port);
-			//objectIn = new ObjectInputStream(theSocket.getInputStream());
-			//writeServer = new PrintWriter(theSocket.getOutputStream());
+			theSocket = new Socket(serverName, port);
+			objectIn = new ObjectInputStream(theSocket.getInputStream());
+			writeServer = new PrintWriter(theSocket.getOutputStream());
 		}
-		//catch(IOException e)
+		catch(IOException e)
 		{
-			//System.out.println("Could not connect with server.");
-			//e.printStackTrace();
-			//System.exit(1);
+			System.out.println("Could not connect with server.");
+			e.printStackTrace();
+			System.exit(1);
 		}
 		System.out.println("Client connected with server");
 	}
