@@ -267,7 +267,7 @@ public class RegularRenter extends RenterGUI{
 				});
 				btnSendEmail.setBounds(10, 237, 150, 21);
 				emailWindow.getContentPane().add(btnSendEmail);
-				
+				emailWindow.setLocationRelativeTo(frame);
 				emailWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				emailWindow.setVisible(true);
 			}
