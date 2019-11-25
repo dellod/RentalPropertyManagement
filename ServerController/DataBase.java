@@ -2,6 +2,13 @@ package ServerController;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.TimeZone;
+
+import javax.activation.DataSource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import com.sun.xml.internal.bind.CycleRecoverable.Context;
 
 import Model.*;
 
@@ -10,15 +17,17 @@ public class DataBase {
     Statement stm;
     private static DataBase singleton;
     
-  	private DataBase() throws SQLException{
+  	private DataBase() throws SQLException, NamingException{
     	
-    	 
+
+    	//myConn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:3306:ENSF480","root", "ensf480db"); 
 	   myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "ensf480db");
+  		// myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ENSF480?serverTimezone=" + TimeZone.getDefault().getID(), "root", "ensf480db");
        stm = myConn.createStatement();
        
     }
   	
-  	public static DataBase getDataBase() throws SQLException {
+  	public static DataBase getDataBase() throws SQLException, NamingException {
   		
   		if(singleton == null) {
   			singleton = new DataBase();
@@ -102,8 +111,16 @@ public class DataBase {
 	   return r;
    }
    public boolean loginRenter(String username, String password) throws SQLException {
-	   String query = "select username from Account where username = " + username + "and password = " + password + ")";
-	   return  stm.execute(query);
+	   String query = "Select username from Account where username = '" + username + "' and password = '" + password + "'";
+	   //String query = "Select username from Account where username = 'willhuang' and password = 'willhuang'";
+	   System.out.println("TTTTTTTTTTTTTTTt");
+	   //System.out.println(stm.execute(query));
+	   ResultSet rs = stm.executeQuery(query);
+	   if(rs.next())
+		   return true;
+	   else 
+		   return false;
+	 //  return  stm.execute(query);
    }
    public boolean loginManager(String username, String password) throws SQLException {
 	   String query = "select username from Manager where username = " + username + "and password = " + password + ")";
