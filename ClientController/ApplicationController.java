@@ -1,7 +1,9 @@
 package ClientController;
 
 import View.*;
+import java.io.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -14,6 +16,7 @@ public class ApplicationController
 	private Socket theSocket;
 	private ObjectInputStream objectIn;
 	private PrintWriter writeServer;
+	private BufferedReader bfReader;
 	
 	private String userType; // User type: Manager, Landlord, or Renter
 	public String[] msgFromGUI; // Buffer from GUI
@@ -29,7 +32,6 @@ public class ApplicationController
 			msgFromGUI[i] = "";
 		}
 		System.out.println("Trying to connect to server...");
-		/*
 		// Add server connections here
 		try
 		{
@@ -39,18 +41,22 @@ public class ApplicationController
 			objectIn = new ObjectInputStream(theSocket.getInputStream());
 			System.out.println("\tCreated object input stream!");
 			writeServer = new PrintWriter(theSocket.getOutputStream());
+			
+			bfReader = new BufferedReader(new InputStreamReader(theSocket.getInputStream()));
 		}
 		catch(IOException e)
 		{
 			System.out.println("Could not connect with server.");
 			e.printStackTrace();
 			System.exit(1);
-		}*/
+		}
 		System.out.println("Client connected with server");
 	}
 	
-	/*** Methods ***/
-	public void initalizeThenRun()
+	/*** Methods 
+	 * @throws IOException 
+	 * @throws ClassNotFoundException ***/
+	public void initalizeThenRun() throws ClassNotFoundException, IOException
 	{
 		while(true) 
 		{
@@ -66,6 +72,7 @@ public class ApplicationController
 			}
 			else if(userType == "Renter")
 			{
+				sendString(userType);
 				communicateRenter();
 			}
 		}
@@ -207,7 +214,7 @@ public class ApplicationController
 		
 	}
 	
-	private void communicateRenter()
+	private void communicateRenter() throws ClassNotFoundException, IOException
 	{
 		//System.out.println("running renter");
 		String renterType = msgFromGUI[1];
@@ -216,6 +223,23 @@ public class ApplicationController
 			//System.out.println("User: " + msgFromGUI[2]);
 			//System.out.println("Password: " + msgFromGUI[3]);
 			//flushOutGUIBuffer(2, 3);
+			sendString(renterType);
+			String renterUsername = msgFromGUI[2];
+			String renterPass = msgFromGUI[3];
+			sendString(renterUsername);
+			sendString(renterPass);
+			
+			String userResult = bfReader.readLine();
+			System.out.println(userResult);
+			/*if(PASS)
+			{
+				//write to GUI that it is okay to go to next window.
+			}
+			//else
+			{
+				//write to GUI that it is not okay to go to next window.
+			}*/
+
 			String regRenterOption = msgFromGUI[4];
 			switch(regRenterOption)
 			{
@@ -274,6 +298,7 @@ public class ApplicationController
 		else if(renterType == "REGULAR")
 		{
 			//System.out.println("no account");
+			sendString(renterType);
 			String regularRenterOption = msgFromGUI[4];
 			switch(regularRenterOption)
 			{
@@ -335,6 +360,16 @@ public class ApplicationController
 		}
 	}
 	
+	/**
+	 * Sends string towards the server.
+	 * @param s String to be sent towards the server.
+	 */
+	protected void sendString(String s) 
+	{
+		writeServer.println(s);
+		writeServer.flush();
+	}
+	
 	/*** Getters ***/
 	public String getUserType()
 	{
@@ -353,9 +388,9 @@ public class ApplicationController
 	}
 	
 	
-	public static void mainClient()
+	public static void mainClient() throws ClassNotFoundException, IOException
 	{
-		ApplicationController client = new ApplicationController("localhost", 4000);
+		ApplicationController client = new ApplicationController("10.13.114.150", 4000);
 		client.getApp().mainGUI(client); // Launches GUI.
 		client.initalizeThenRun();
 	}
