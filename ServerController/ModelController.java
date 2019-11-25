@@ -29,9 +29,9 @@ public class ModelController {
 		
 	}
 	
-	public void insertProperty(Property p) {
-		
-		
+	public void insertProperty(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, int year, int month, int day, int gender) throws SQLException {
+		String date = Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(day);
+		dataBase.registerProperty(type, numBath, numBed, furnished, state, street, city, country, province, quadrant, Fname, Lname, email, date, gender);
 		
 	}
 	
@@ -59,8 +59,17 @@ public class ModelController {
 		return dataBase.searchByID(ID);
 	}
 	
-	public String createNotification(ArrayList<Property> propertyCart) {
-		
+	public String getOwnerEmail(int ID) throws SQLException {
+		return dataBase.searchOwnerEmailByID(ID);
+	}
+	public ArrayList<Property> search(String type, int numBath, int numBed, int furnished, String quadrant) throws SQLException{
+		ArrayList<Property> result = new ArrayList<Property>();
+		result.addAll(dataBase.searchByType(type));
+		result.addAll(dataBase.searchByBath(numBath));
+		result.addAll(dataBase.searchByBed(numBed));
+		result.addAll(dataBase.searchByFurnish(furnished));
+		result.addAll(dataBase.searchByQuadrant(quadrant));
+		return result;
 	}
 	
 	public boolean areThereNewNotification(RegisteredRenter r) throws SQLException {

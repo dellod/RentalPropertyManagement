@@ -74,6 +74,7 @@ public class DataBase {
 	   
 	   r.setCart(cart);
    }
+   
    public Report generateReport(MyDate a,MyDate b) throws SQLException {
 
 	   
@@ -129,6 +130,25 @@ public class DataBase {
 		   
 	  
    }
+   
+   public boolean registerProperty(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, String date, int gender) throws SQLException {
+	   String query = "insert into Property (type,numBath,numBed,furnished,state,addressStreet,addressCity,addressCountry,addressProvince,addressQuadrant,ownerFname,ownerLname,ownerEmail,ownerBirthday,gender)"
+	   		+ " values (" +  type + ", "+ Integer.toString(numBath)+", "+ Integer.toString(numBed)+", "+ Integer.toString(furnished)+", "+ state+", "+street+", "+city+", "+country+", "+province+", "+quadrant+", "+Fname+", "+Lname+", "+email+", DATE '"+date+"', "+Integer.toString(gender)+")";
+	   if(stm.execute(query))
+		   return true;
+	   else {
+		   return false;
+	   }
+   }
+   
+   public boolean settingState(int ID,String state) throws SQLException {
+	   String query = "update property set state = '"+ state +"' where ID = " + Integer.toString(ID);
+	   if(stm.execute(query))
+		   return true;
+	   else {
+		   return false;
+	   }
+   }
   
    
    private  ArrayList<Property> convertToProperty(ResultSet rs) throws SQLException {
@@ -175,6 +195,11 @@ public class DataBase {
 		   toSend.add(p);
 	   }
 	   return toSend;
+   }
+   public String searchOwnerEmailByID(int ID) throws SQLException {
+	   String query = "selct ownerEmail from Property where ID = "+ Integer.toString(ID);
+	   ResultSet rs = stm.executeQuery(query);
+	   return rs.getString("ownerEmail");
    }
    public  ArrayList<Property> searchByType(String type) throws SQLException {
 	   String query = "selct * from Property where type = "+type;
