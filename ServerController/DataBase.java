@@ -240,6 +240,7 @@ public class DataBase {
 	   String query = "selct * from Property where furnished = "+ Integer.toString(furnished);
 	   ResultSet rs = stm.executeQuery(query);
 	   return convertToProperty(rs);
+	   
    }
    
    public  ArrayList<Property> searchByQuadrant(String quadrant) throws SQLException {
