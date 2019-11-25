@@ -31,9 +31,7 @@ public class Property implements Serializable
 	/*** Methods ***/
 	public String toString()
 	{
-		return ("Property: " + address.toString() +
-				"\tState: " + state +
-				"\n\tOwner: " + owner.toString());
+		return ("ID: " + ID + "; Property: " + address.toString() + "; State: " + state + "; Bathrooms: " + numBathrooms + "; Beds:" + numBedrooms + "; Furnished: " + furnished); 
 	}
 	
 	/*** Getters ***/

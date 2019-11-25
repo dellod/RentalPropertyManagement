@@ -20,6 +20,7 @@ public class ApplicationController
 	private ObjectInputStream objectIn;
 	private PrintWriter writeServer;
 	private BufferedReader bfReader;
+	private static boolean propertiesFlag = false;
 	
 	private String userType; // User type: Manager, Landlord, or Renter
 	public String[] msgFromGUI; // Buffer from GUI
@@ -246,9 +247,17 @@ public class ApplicationController
 			}
 			
 			ArrayList<Property> properties = (ArrayList<Property>) objectIn.readObject();
-			for(int i = 0; i < properties.size(); i++)
+			int index = 0;
+			
+			
+			
+			while(!propertiesFlag)
 			{
-				System.out.println(properties.get(i));
+				for(int i = 0; i < properties.size(); i++)
+				{
+					System.out.println(properties.get(i));
+				}
+				propertiesFlag = true;
 			}
 			
 			String regRenterOption = msgFromGUI[4];
