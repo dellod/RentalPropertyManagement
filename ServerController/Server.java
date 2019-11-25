@@ -49,6 +49,7 @@ public class Server
 			String input;
 			try {
 			while(true) {
+				
 				input = socketIn.readLine();
 				
 				switch(input) {
