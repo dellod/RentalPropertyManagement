@@ -24,7 +24,7 @@ public class Address implements Serializable
 	@Override
 	public String toString()
 	{
-		return (street + " " + quadrant + ", " + city + ", " + province + " " + country + "\n");
+		return (street + " " + quadrant + ", " + city + ", " + province + " " + country);
 	}
 	
 	/*** Getters ***/
