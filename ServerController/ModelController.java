@@ -3,7 +3,6 @@ package ServerController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.NamingException;
 
 import Model.*;
 public class ModelController {
@@ -12,7 +11,7 @@ public class ModelController {
 	public DataBase getDataBase() {
 		return dataBase;
 	}
-	public ModelController() throws SQLException, NamingException {
+	public ModelController() throws SQLException{
 		
 		dataBase = DataBase.getDataBase();
 	}

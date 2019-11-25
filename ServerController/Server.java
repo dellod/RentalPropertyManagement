@@ -37,7 +37,7 @@ public class Server
 	/*** Methods 
 	 * @throws SQLException 
 	 * @throws NamingException ***/
-	public void communicate() throws SQLException, NamingException 
+	public void communicate() throws SQLException
 	{
 		
 			try 

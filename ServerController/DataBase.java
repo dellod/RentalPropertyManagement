@@ -6,7 +6,6 @@ import java.util.TimeZone;
 
 import javax.activation.DataSource;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 import com.sun.xml.internal.bind.CycleRecoverable.Context;
 
@@ -17,7 +16,7 @@ public class DataBase {
     Statement stm;
     private static DataBase singleton;
     
-  	private DataBase() throws SQLException, NamingException{
+  	private DataBase() throws SQLException{
     	
 
     	//myConn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:3306:ENSF480","root", "ensf480db"); 
@@ -27,7 +26,7 @@ public class DataBase {
        
     }
   	
-  	public static DataBase getDataBase() throws SQLException, NamingException {
+  	public static DataBase getDataBase() throws SQLException{
   		
   		if(singleton == null) {
   			singleton = new DataBase();
