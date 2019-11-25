@@ -210,13 +210,117 @@ public class ApplicationController
 		String renterType = msgFromGUI[1];
 		if(renterType == "REGISTERED")
 		{
-			System.out.println("User: " + msgFromGUI[2]);
-			System.out.println("Password: " + msgFromGUI[3]);
-			flushOutGUIBuffer(1, 4);
+			//System.out.println("User: " + msgFromGUI[2]);
+			//System.out.println("Password: " + msgFromGUI[3]);
+			//flushOutGUIBuffer(2, 3);
+			String regRenterOption = msgFromGUI[4];
+			switch(regRenterOption)
+			{
+				case("NOTIFICATIONS"):
+					break;
+				case("SEARCH_AND_SAVE"):
+					//System.out.println("seacrchifafsafsng");
+					if(msgFromGUI[5] == "SEARCH")
+					{
+						System.out.println("Search button has been pressed.");
+						if(msgFromGUI[5] == "SEARCH_ID")
+						{
+							int propId = Integer.parseInt(msgFromGUI[6]);
+							System.out.println(propId);
+							
+							flushOutGUIBuffer(4, 6);
+						}
+						else
+						{
+							String searchHouseType = msgFromGUI[6];
+							int searchNumBeds = Integer.parseInt(msgFromGUI[7]);
+							int searchNumBaths = Integer.parseInt(msgFromGUI[8]);
+							boolean isSearchFurnished;
+							if(msgFromGUI[9] == "FURNISHED")
+							{
+								isSearchFurnished = true;
+							}
+							else
+							{
+								isSearchFurnished = false;
+							}
+							String searchCityQuad = msgFromGUI[10];
+							
+							System.out.println(searchHouseType);
+							System.out.println(searchNumBeds);
+							System.out.println(searchNumBaths);
+							System.out.println(isSearchFurnished);
+							System.out.println(searchCityQuad);
+							
+							flushOutGUIBuffer(4, 10);
+						}
+					}
+					
+					break;
+				case("EMAIL"):
+					if(msgFromGUI[5] == "EMAIL_BUTTON")
+					{
+						String emailToSend = msgFromGUI[5];
+						System.out.println(emailToSend);
+						
+						flushOutGUIBuffer(5, 5);
+					}
+					break;
+			}
 		}
 		else if(renterType == "REGULAR")
 		{
-			System.out.println("no account");
+			//System.out.println("no account");
+			String regularRenterOption = msgFromGUI[4];
+			switch(regularRenterOption)
+			{
+				case("SEARCH"):
+					if(msgFromGUI[5] == "SEARCH")
+					{
+						System.out.println("Search button has been pressed.");
+						if(msgFromGUI[5] == "SEARCH_ID")
+						{
+							int propId = Integer.parseInt(msgFromGUI[6]);
+							System.out.println(propId);
+							
+							flushOutGUIBuffer(4, 6);
+						}
+						else
+						{
+							String searchHouseType = msgFromGUI[6];
+							int searchNumBeds = Integer.parseInt(msgFromGUI[7]);
+							int searchNumBaths = Integer.parseInt(msgFromGUI[8]);
+							boolean isSearchFurnished;
+							if(msgFromGUI[9] == "FURNISHED")
+							{
+								isSearchFurnished = true;
+							}
+							else
+							{
+								isSearchFurnished = false;
+							}
+							String searchCityQuad = msgFromGUI[10];
+							
+							System.out.println(searchHouseType);
+							System.out.println(searchNumBeds);
+							System.out.println(searchNumBaths);
+							System.out.println(isSearchFurnished);
+							System.out.println(searchCityQuad);
+							
+							flushOutGUIBuffer(4, 10);
+						}
+					}
+					break;
+				case("EMAIL"):
+					if(msgFromGUI[5] == "EMAIL_BUTTON")
+					{
+						String emailToSend = msgFromGUI[5];
+						System.out.println(emailToSend);
+						
+						flushOutGUIBuffer(5, 5);
+					}
+					break;
+			}
 		}
 	}
 	
