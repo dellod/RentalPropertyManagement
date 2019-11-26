@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 
 import javax.naming.NamingException;
 
+import Model.MyDate;
 import Model.Property;
 
 public class Server 
@@ -65,7 +66,7 @@ public class Server
 			while(true) {
 				
 				input = socketIn.readLine();
-				//System.out.println(input);
+				System.out.println(input);
 				
 				switch(input) {
 				
@@ -74,12 +75,208 @@ public class Server
 					//System.out.println("IN RENTER");
 					renter();
 					break;
+					
+				case "Landlord":
+					landLoardDecideWhatToDo();
+					break;
+					
+				case "Manager":
+					manager();
 				}
 			}
 			}
 			catch(IOException e) {
 				e.printStackTrace();
 			}
+		
+	}
+	public void manager() throws IOException, SQLException {
+		if(managerLogin()) {
+			objectOut.writeBoolean(true);
+			objectOut.flush();
+			managerDecideWhatToDo();
+		}
+		else{
+			objectOut.writeBoolean(false);
+			objectOut.flush();
+		}
+		
+		
+		
+	}
+	public void managerDecideWhatToDo() throws IOException, SQLException {
+		String input;
+		while(true) {
+			input = socketIn.readLine();
+			
+			switch(input) {
+			
+			case "GENERATE":
+				generarteReport();
+				break;
+			case "CHANGESTATE":
+				
+				break;
+				
+			}
+			break;
+		}
+	}
+	public void generarteReport() throws IOException, SQLException {
+		String startD = socketIn.readLine();
+		int SD = Integer.parseInt(startD);
+		String startM = socketIn.readLine();
+		int SM = Integer.parseInt(startM);
+		String startY = socketIn.readLine();
+		int SY = Integer.parseInt(startY);
+		String afterD = socketIn.readLine();
+		int AD = Integer.parseInt(afterD);
+		String afterM = socketIn.readLine();
+		int AM = Integer.parseInt(afterM);
+		String afterY = socketIn.readLine();
+		int AY = Integer.parseInt(afterY);
+		
+		MyDate start = new MyDate(SD,SM,SY);
+		MyDate after = new MyDate(AD,AM,AY);
+		
+		objectOut.writeObject(modelController.generateReport(start, after));
+	}
+	public boolean managerLogin() throws IOException, SQLException {
+		String username = socketIn.readLine();
+		String password = socketIn.readLine();
+		return modelController.validateManager(username, password);
+	}
+	public void landLoardDecideWhatToDo() throws IOException, SQLException {
+		String input = socketIn.readLine();
+		while(true) {
+			input = socketIn.readLine();
+			
+			switch(input) {
+			
+			case "ADDING_PROP":
+				addProperty();
+				break;
+			case "CHANGESTATE":
+				changeState();
+				break;
+				
+			}
+			break;
+		}
+	}
+	public void changeState() throws IOException, SQLException {
+		String ID = socketIn.readLine();
+		int theID = Integer.parseInt(ID);
+		String state = socketIn.readLine();
+		modelController.settingState(theID, state);
+		
+	}
+	public void addProperty() throws IOException, SQLException {
+		System.out.println("in add property");
+		String input;
+		while(true) {
+			input = socketIn.readLine();
+			System.out.println(input);
+			switch(input) {
+			
+			case "REGISTERED":
+				String email = socketIn.readLine();
+				ArrayList<String> ownerInfo = modelController.getDataBase().searchOwnerByEmail(email);
+				String ownerEmail = ownerInfo.get(0);
+				String ownerFname = ownerInfo.get(1);
+				String ownerLname = ownerInfo.get(2);
+				String gender1 = ownerInfo.get(3);
+				int gender = Integer.parseInt(gender1);
+				String type = socketIn.readLine();
+				
+				String furnished1 = socketIn.readLine();
+				int furnished = Integer.parseInt(furnished1);
+				
+				String numBath1 = socketIn.readLine();
+				int numBath = Integer.parseInt(numBath1);
+				String numBed1 = socketIn.readLine();
+				int numBed = Integer.parseInt(numBed1);
+				String street = socketIn.readLine();
+				String quadrant = socketIn.readLine();
+				String city = socketIn.readLine();
+				String province = socketIn.readLine();
+				String country = socketIn.readLine();
+				
+				MyDate d = new MyDate();
+				
+				
+				String postOnline;
+				while(true) {
+					postOnline = socketIn.readLine();
+					switch(postOnline) {
+					
+					case "ONLINE":
+						System.out.println("inONLINE");
+						modelController.insertPropertyWithPosting(type, numBath, numBed, furnished, "active", street, city, country, province, quadrant, ownerFname, ownerLname, ownerEmail, d.getYear(), d.getMonth(), d.getDay(), gender,10,1);
+						break;
+					case "OFFLINE":
+						modelController.insertPropertyWithoutPosting(type, numBath, numBed, furnished, "active", street, city, country, province, quadrant, ownerFname, ownerLname, ownerEmail, d.getYear(), d.getMonth(), d.getDay(), gender);
+						break;
+					}
+					break;
+				//
+				}
+			
+				break;
+				
+			case "NOT_REGISTERED":
+				
+				String ownerFname2 = socketIn.readLine();
+				String ownerLname2 = socketIn.readLine();
+				String gender2 = socketIn.readLine();
+				int gender3 = Integer.parseInt(gender2);
+				String ownerEmail2 = socketIn.readLine();
+				String ownerStreet = socketIn.readLine();
+				String ownerQuadrant = socketIn.readLine();
+				String ownerCity = socketIn.readLine();
+				String ownerProvince = socketIn.readLine();
+				String ownerCountry = socketIn.readLine();
+				String month = socketIn.readLine();
+				String day = socketIn.readLine();
+				String year = socketIn.readLine();
+				
+				String type2 = socketIn.readLine();
+				
+				String furnished2 = socketIn.readLine();
+				int furnished3 = Integer.parseInt(furnished2);
+				
+				String numBath2 = socketIn.readLine();
+				int numBath3 = Integer.parseInt(numBath2);
+				String numBed2 = socketIn.readLine();
+				int numBed3 = Integer.parseInt(numBed2);
+				
+				String street2 = socketIn.readLine();
+				String quadrant2 = socketIn.readLine();
+				String city2 = socketIn.readLine();
+				String province2 = socketIn.readLine();
+				String country2 = socketIn.readLine();
+				
+				//String postOnline2 = socketIn.readLine();
+				MyDate d2= new MyDate();
+				String postOnline2;
+				while(true) {
+					postOnline2 = socketIn.readLine();
+					switch(postOnline2) {
+					
+					case "ONLINE":
+						System.out.println("inONLINE");
+						modelController.insertPropertyWithPosting(type2, numBath3, numBed3, furnished3, "active", street2, city2, country2, province2, quadrant2, ownerFname2, ownerLname2, ownerEmail2, d2.getYear(), d2.getMonth(), d2.getDay(), gender3,10,1);
+						break;
+					case "OFFLINE":
+						modelController.insertPropertyWithoutPosting(type2, numBath3, numBed3, furnished3, "active", street2, city2, country2, province2, quadrant2, ownerFname2, ownerLname2, ownerEmail2, d2.getYear(), d2.getMonth(), d2.getDay(), gender3);
+						break;
+					}
+					break;
+				//
+				}
+			
+			}
+		}
 		
 	}
 	public void renter() throws IOException, SQLException {
@@ -90,15 +287,21 @@ public class Server
 		switch (input) {
 		
 		case "REGULAR":
-			//System.out.println("TEST");
+			//wait("REGULAR");
+			listAllProperty();
+			decideWhatToDo();
 			break;
 		case "REGISTERED":
 			registeredRenter();
-			
+			decideWhatToDo();
 			break;
 				
 		}
 		}
+	}
+	public void listAllProperty() throws IOException, SQLException {
+		objectOut.writeObject(modelController.getAllProperty());
+		objectOut.flush();
 	}
 	public void registeredRenter() throws IOException, SQLException {
 		wait("REGISTERED");
@@ -109,8 +312,7 @@ public class Server
 		objectOut.writeBoolean(true);
 		objectOut.flush();
 		System.out.println("true");
-		objectOut.writeObject(modelController.getAllProperty());
-		objectOut.flush();
+		listAllProperty();
 		
 		}
 		else{
@@ -121,6 +323,11 @@ public class Server
 		
 		
 		
+		
+	}
+	
+	
+	public void decideWhatToDo() throws IOException, NumberFormatException, SQLException {
 		String input;
 		while(true) {
 			 input = socketIn.readLine();
@@ -161,6 +368,15 @@ public class Server
 			for(int i=0;i<modelController.search(houseType, numBath, numBed, furnished, quadrant).size();i++) {
 				System.out.println(modelController.search(houseType, numBath, numBed, furnished, quadrant));
 			}
+			break;
+		
+		case "EMAIL":
+			String content = socketIn.readLine();
+			//System.out.println(content);
+			String property = socketIn.readLine();
+			System.out.println("The following property's owner will get email");
+			System.out.println(property);
+			System.out.println(content);
 			break;
 				
 		}

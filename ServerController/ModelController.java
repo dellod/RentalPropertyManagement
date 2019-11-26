@@ -19,7 +19,8 @@ public class ModelController {
 		return dataBase.getAllProperty();
 	}
 	public Report generateReport(MyDate start,MyDate end) throws SQLException {
-		
+		String start1 = Integer.toString(start.getYear())+"-"+Integer.toString(start.getMonth())+"-"+Integer.toString(start.getDay());
+		String end1 = Integer.toString(end.getYear())+"-"+Integer.toString(end.getMonth())+"-"+Integer.toString(end.getDay());
 		return dataBase.generateReport(start, end);
 		
 	}
@@ -36,12 +37,17 @@ public class ModelController {
 		
 	}
 	
-	public void insertProperty(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, int year, int month, int day, int gender) throws SQLException {
+	public void insertPropertyWithoutPosting(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, int year, int month, int day, int gender) throws SQLException {
 		String date = Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(day);
-		dataBase.registerProperty(type, numBath, numBed, furnished, state, street, city, country, province, quadrant, Fname, Lname, email, date, gender);
+		dataBase.registerPropertyWithoutPosting(type, numBath, numBed, furnished, state, street, city, country, province, quadrant, Fname, Lname, email, date, gender);
 		
 	}
 	
+	public void insertPropertyWithPosting(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, int year, int month, int day, int gender,int fee,int period) throws SQLException {
+		String date = Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(day);
+		dataBase.registerPropertyWithPosting(type, numBath, numBed, furnished, state, street, city, country, province, quadrant, Fname, Lname, email, date, gender,fee ,period);
+		
+	}
 	public ArrayList<Property> searchByType(String type) throws SQLException{
 		return dataBase.searchByType(type);
 	}
@@ -66,8 +72,17 @@ public class ModelController {
 		return dataBase.searchByID(ID);
 	}
 	
+	public ArrayList<String> searchByEmail(String email) throws SQLException{
+		ArrayList<String> emailInData =  dataBase.searchOwnerByEmail(email);
+		return emailInData;
+	}
+	
 	public String getOwnerEmail(int ID) throws SQLException {
 		return dataBase.searchOwnerEmailByID(ID);
+	}
+	
+	public boolean settingState(int ID,String state) throws SQLException {
+		return dataBase.settingState(ID, state);
 	}
 	public ArrayList<Property> search(String type, int numBath, int numBed, int furnished, String quadrant) throws SQLException{
 		/*ArrayList<Property> result = new ArrayList<Property>();

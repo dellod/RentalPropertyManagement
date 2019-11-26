@@ -12,6 +12,7 @@ import com.sun.xml.internal.bind.CycleRecoverable.Context;
 import Model.*;
 
 public class DataBase {
+	private static final int ID = 0;
 	Connection myConn;
     Statement stm;
     private static DataBase singleton;
@@ -133,7 +134,11 @@ public class DataBase {
    }
    public boolean loginManager(String username, String password) throws SQLException {
 	   String query = "select username from Manager where username = '" + username + "'and password = '" + password + "'";
-	   return  stm.execute(query);
+	   ResultSet rs = stm.executeQuery(query);
+	   if(rs.next())
+		   return true;
+	   else 
+		   return false;
 	   
    }
    public void getAllUserName() {
@@ -163,9 +168,18 @@ public class DataBase {
 	  
    }
    
-   public boolean registerProperty(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, String date, int gender) throws SQLException {
-	   String query = "insert into Property (type,numBath,numBed,furnished,state,addressStreet,addressCity,addressCountry,addressProvince,addressQuadrant,ownerFname,ownerLname,ownerEmail,ownerBirthday,gender)"
-	   		+ " values ('" +  type + "', '"+ Integer.toString(numBath)+"', '"+ Integer.toString(numBed)+"', '"+ Integer.toString(furnished)+"', '"+ state+"', '"+street+"', '"+city+"', '"+country+"', '"+province+"', '"+quadrant+"', '"+Fname+"', '"+Lname+"', '"+email+"', DATE '"+date+"', '"+Integer.toString(gender)+"')";
+   public boolean registerPropertyWithoutPosting(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, String date, int gender) throws SQLException {
+	   String query = "insert into Property (type,numBath,numBed,furnished,state,addressStreet,addressCity,addressCountry,addressProvince,addressQuadrant,ownerFname,ownerLname,ownerEmail,regDate,gender)"
+	   		+ " values ('" +  type + "', '"+ Integer.toString(numBath)+"', '"+ Integer.toString(numBed)+"', '"+ Integer.toString(furnished)+"', '"+ state+"', '"+street+"', '"+city+"', '"+country+"', '"+province+"', '"+quadrant+"', '"+Fname+"', '"+Lname+"', '"+email+"', DATE '"+date+"', "+Integer.toString(gender)+")";
+	   if(stm.execute(query))
+		   return true;
+	   else {
+		   return false;
+	   }
+   }
+   public boolean registerPropertyWithPosting(String type, int numBath, int numBed, int furnished, String state, String street, String city, String country, String province, String quadrant, String Fname, String Lname, String email, String date, int gender, int fee, int period) throws SQLException {
+	   String query = "insert into Property (type,numBath,numBed,furnished,state,addressStreet,addressCity,addressCountry,addressProvince,addressQuadrant,ownerFname,ownerLname,ownerEmail,regDate,gender,fees,period)"
+	   		+ " values ('" +  type + "', '"+ Integer.toString(numBath)+"', '"+ Integer.toString(numBed)+"', '"+ Integer.toString(furnished)+"', '"+ state+"', '"+street+"', '"+city+"', '"+country+"', '"+province+"', '"+quadrant+"', '"+Fname+"', '"+Lname+"', '"+email+"', DATE '"+date+"', '"+Integer.toString(gender)+"', '"+Integer.toString(fee)+"', "+Integer.toString(period)+")";
 	   if(stm.execute(query))
 		   return true;
 	   else {
@@ -209,9 +223,9 @@ public class DataBase {
 		   String ownerFname = rs.getString("ownerFname");
 		   String ownerLname = rs.getString("ownerLname");
 		   String ownerEmail = rs.getString("ownerEmail");
-		   Date d2 = rs.getDate("ownerBirthday");
-		   MyDate birthday = new MyDate(d2.getDate(),d2.getMonth(),d2.getYear());
-		   
+		  // Date d2 = rs.getDate("ownerBirthday");
+		   //MyDate birthday = new MyDate(d2.getDate(),d2.getMonth(),d2.getYear());
+		   MyDate birthday = new MyDate();
 		   boolean gender = rs.getBoolean("gender");
 		   String gender2;
 		   if(gender) {
@@ -278,5 +292,23 @@ public class DataBase {
 	   
    }
    
+   public ArrayList<String> searchOwnerByEmail(String email) throws SQLException{
+	   ArrayList<String> toSend= new ArrayList<String>();
+	   String query = "select ownerEmail, ownerFname, ownerLname, gender from Property where ownerEmail = '"+email+"'";
+	   ResultSet rs = stm.executeQuery(query);
+	   rs.next();
+	   toSend.add(rs.getString("ownerEmail"));
+	   toSend.add(rs.getString("ownerFname"));
+	   toSend.add(rs.getString("ownerLname"));
+	   String gender;
+	   if(rs.getBoolean(("gender")))
+		   gender = "1";
+	   else 
+		   gender = "0";
+	   toSend.add(gender);
+	   return toSend;
+   }
+   
+
 
 }
