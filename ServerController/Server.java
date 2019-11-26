@@ -8,10 +8,13 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.naming.NamingException;
+
+import Model.Property;
 
 public class Server 
 {
@@ -91,6 +94,7 @@ public class Server
 			break;
 		case "REGISTERED":
 			registeredRenter();
+			
 			break;
 				
 		}
@@ -114,6 +118,54 @@ public class Server
 		objectOut.flush();
 		System.out.println("false");
 		}
+		
+		
+		
+		String input;
+		while(true) {
+			 input = socketIn.readLine();
+			 System.out.println(input);
+		switch (input) {
+		
+		case "BY_ID":
+			//System.out.println("IN BYID");
+			String ID = socketIn.readLine();
+			//System.out.println(ID);
+			//objectOut.flush();
+			//ArrayList<Property> toSend = modelController.searchByID(Integer.parseInt(ID));
+			objectOut.writeObject(modelController.searchByID(Integer.parseInt(ID)));
+			objectOut.flush();
+			for(int i=0;i<modelController.searchByID(Integer.parseInt(ID)).size();i++) {
+				System.out.println(modelController.searchByID(Integer.parseInt(ID)).get(i).toString());
+			}
+			
+			break;
+		case "BY_ELSE":
+			String houseType =  socketIn.readLine();
+			String stringNumBed = socketIn.readLine();
+			int numBed = Integer.parseInt(stringNumBed);
+			String stringNumBath = socketIn.readLine();
+			int numBath = Integer.parseInt(stringNumBath);
+			String stringFurnished = socketIn.readLine();
+			int furnished = Integer.parseInt(stringFurnished);
+			
+			
+			String quadrant = socketIn.readLine();
+			System.out.println(houseType);
+			System.out.println(stringNumBed);
+			System.out.println(stringNumBath);
+			System.out.println(stringFurnished);
+			System.out.println(quadrant);
+			objectOut.writeObject(modelController.search(houseType, numBath, numBed, furnished, quadrant));
+			objectOut.flush();
+			for(int i=0;i<modelController.search(houseType, numBath, numBed, furnished, quadrant).size();i++) {
+				System.out.println(modelController.search(houseType, numBath, numBed, furnished, quadrant));
+			}
+			break;
+				
+		}
+		
+	}
 	}
 	public void wait(String s) throws IOException {
 		while(socketIn.readLine() == s) {}

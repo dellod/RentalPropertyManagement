@@ -70,13 +70,14 @@ public class ModelController {
 		return dataBase.searchOwnerEmailByID(ID);
 	}
 	public ArrayList<Property> search(String type, int numBath, int numBed, int furnished, String quadrant) throws SQLException{
-		ArrayList<Property> result = new ArrayList<Property>();
+		/*ArrayList<Property> result = new ArrayList<Property>();
 		result.addAll(dataBase.searchByType(type));
 		result.addAll(dataBase.searchByBath(numBath));
 		result.addAll(dataBase.searchByBed(numBed));
 		result.addAll(dataBase.searchByFurnish(furnished));
 		result.addAll(dataBase.searchByQuadrant(quadrant));
-		return result;
+		return result;*/
+		return dataBase.search(type, numBath, numBed, furnished, quadrant);
 	}
 	
 	public boolean areThereNewNotification(RegisteredRenter r) throws SQLException {

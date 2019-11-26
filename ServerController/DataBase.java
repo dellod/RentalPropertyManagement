@@ -37,14 +37,14 @@ public class DataBase {
    public void getNotification(RegisteredRenter r) throws SQLException{
 	   
 	   ArrayList<Property> cart = new ArrayList<Property>();
-	   String query = "selct type from regrenter where email = "+r.getEmai();
+	   String query = "selct type from regrenter where email = '"+r.getEmai()+"'";
 	   ResultSet rs = stm.executeQuery(query);
 	   rs.next();
 	   String s = rs.getString("type");
 	   
 	   cart.addAll(searchByType(s));
 	   
-	   query = "selct numBath from regrenter where email = "+r.getEmai();
+	   query = "selct numBath from regrenter where email = '"+r.getEmai()+"'";
 	   rs = stm.executeQuery(query);
 	   rs.next();
 	   int numBath = rs.getInt("numBath");
@@ -52,14 +52,14 @@ public class DataBase {
 	   cart.addAll(searchByBath(numBath));
 	   
 	   
-	   query = "selct numBed from regrenter where email = "+r.getEmai();
+	   query = "selct numBed from regrenter where email = '"+r.getEmai()+"'";
 	   rs = stm.executeQuery(query);
 	   rs.next();
 	   int numBed = rs.getInt("numBed");
 	   
 	   cart.addAll(searchByBed(numBed));
 	   
-	   query = "selct furnished from regrenter where email = "+r.getEmai();
+	   query = "selct furnished from regrenter where email = '"+r.getEmai()+"'";
 	   rs = stm.executeQuery(query);
 	   rs.next();
 	   boolean furnished = rs.getBoolean("furnished");
@@ -73,10 +73,10 @@ public class DataBase {
 	   cart.addAll(searchByFurnish(furnish));
 	   
 	   
-	   query = "selct quadrant from regrenter where email = "+r.getEmai();
+	   query = "selct quadrant from regrenter where email = '"+r.getEmai()+"'";
 	   rs = stm.executeQuery(query);
 	   rs.next();
-	   String quadrant = rs.getString("quadrant");
+	   String quadrant = rs.getString("addressQuadrant");
 	   
 	   cart.addAll(searchByQuadrant(quadrant));
 	   
@@ -228,45 +228,51 @@ public class DataBase {
 	   }
 	   return toSend;
    }
+   public ArrayList<Property> search(String type, int numBath, int numBed, int furnished, String quadrant) throws SQLException{
+		String query = "select * from property where type = '"+type+"' and numBath = "+Integer.toString(numBath)+" and numBed = "+Integer.toString(numBed)+" and furnished = "+Integer.toString(furnished) + " and addressQuadrant = '"+quadrant+"'";
+	  // String query = "select * from Property where type = '"+type+"' and "; 
+	   ResultSet rs = stm.executeQuery(query);
+		 return convertToProperty(rs);
+	}
    public String searchOwnerEmailByID(int ID) throws SQLException {
-	   String query = "selct ownerEmail from Property where ID = "+ Integer.toString(ID);
+	   String query = "select ownerEmail from Property where ID = "+ Integer.toString(ID);
 	   ResultSet rs = stm.executeQuery(query);
 	   return rs.getString("ownerEmail");
    }
    public  ArrayList<Property> searchByType(String type) throws SQLException {
-	   String query = "selct * from Property where type = "+type;
+	   String query = "select * from Property where type = '"+type+"'";
 	   ResultSet rs = stm.executeQuery(query);
 	   return convertToProperty(rs);
    }
    
    public  ArrayList<Property> searchByBath(int num) throws SQLException {
-	   String query = "selct * from Property where numBath = "+ Integer.toString(num);
+	   String query = "select * from Property where numBath = "+ Integer.toString(num);
 	   ResultSet rs = stm.executeQuery(query);
 	   return convertToProperty(rs);
    }
  
    public  ArrayList<Property> searchByBed(int num) throws SQLException {
-	   String query = "selct * from Property where numBed = "+ Integer.toString(num);
+	   String query = "select * from Property where numBed = "+ Integer.toString(num);
 	   ResultSet rs = stm.executeQuery(query);
 	   return convertToProperty(rs);
    }
    
    public  ArrayList<Property> searchByFurnish(int furnished) throws SQLException {
-	   String query = "selct * from Property where furnished = "+ Integer.toString(furnished);
+	   String query = "select * from Property where furnished = "+ Integer.toString(furnished);
 	   ResultSet rs = stm.executeQuery(query);
 	   return convertToProperty(rs);
 	   
    }
    
    public  ArrayList<Property> searchByQuadrant(String quadrant) throws SQLException {
-	   String query = "selct * from Property where quadrant = "+ quadrant;
+	   String query = "select * from Property where addressQuadrant = '"+ quadrant+"'";
 	   ResultSet rs = stm.executeQuery(query);
 	   return convertToProperty(rs);
 	   
    }
    
    public ArrayList<Property> searchByID(int ID) throws SQLException {
-	   String query = "selct * from Property where ID = "+ Integer.toString(ID);
+	   String query = "select * from Property where ID = "+Integer.toString(ID);
 	   ResultSet rs = stm.executeQuery(query);
 	   return convertToProperty(rs);
 	   
