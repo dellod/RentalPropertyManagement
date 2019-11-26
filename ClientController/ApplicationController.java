@@ -1,7 +1,10 @@
 package ClientController;
 
 import View.*;
+import View.RegisteredRenter;
+
 import java.io.*;
+import Model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,22 +13,55 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import Model.*;
 
 // AKA Client
+/**
+ * ApplicationController is the main client being to control the GUI side of the application and communicate those results to the server.
+ *
+ */
 public class ApplicationController 
 {
+	/**
+	 * Main GUI.
+	 */
 	Application app; // GUI
-	private Socket theSocket;
-	private ObjectInputStream objectIn;
-	private PrintWriter writeServer;
-	private BufferedReader bfReader;
-	private static boolean propertiesFlag = false;
 	
+	/**
+	 * Socket that communicates to the server.
+	 */
+	private Socket theSocket;
+	
+	/**
+	 * Stream that receives objects from the server.
+	 */
+	private ObjectInputStream objectIn;
+	
+	/**
+	 * Writer that writes to data to the server.
+	 */
+	private PrintWriter writeServer;
+	
+	/**
+	 * Buffered reader that reads strings from the server.
+	 */
+	private BufferedReader bfReader;
+	
+	/**
+	 * String that indicates the type of user selected at the GUI.
+	 */
 	private String userType; // User type: Manager, Landlord, or Renter
-	public String[] msgFromGUI; // Buffer from GUI
+	
+	/**
+	 * Global variable that acts like a buffer to receive information from the GUI.
+	 */
+	public static volatile String[] msgFromGUI; // Buffer from GUI
 	
 	/*** Constructors ***/
+	/**
+	 * Constructs ApplicationController with a server name type and port.
+	 * @param serverName is the name of server that controls if it is localhost or run over wifi.
+	 * @param port is the port that the client communicates through to the server.
+	 */
 	public ApplicationController(String serverName, int port)
 	{
 		app = new Application(this);
@@ -54,7 +90,7 @@ public class ApplicationController
 			e.printStackTrace();
 			System.exit(1);
 		}
-		System.out.println("Client connected with server");
+		System.out.println("Client connected with server!\n");
 	}
 	
 	/*** Methods 
@@ -82,6 +118,9 @@ public class ApplicationController
 		}
 	}
 	
+	/**
+	 * Communicates to the server as the manager.
+	 */
 	private void communicateManager()
 	{
 		//System.out.println("running manager");
@@ -94,6 +133,9 @@ public class ApplicationController
 		}
 	}
 	
+	/**
+	 * Communicates to the server as the landlord.
+	 */
 	private void communicateLandlord()
 	{
 		//System.out.println("running landlord");
@@ -218,6 +260,9 @@ public class ApplicationController
 		
 	}
 	
+	/**
+	 * Communicates to the server as the renter.
+	 */
 	private void communicateRenter() throws ClassNotFoundException, IOException
 	{
 		//System.out.println("running renter");
@@ -227,7 +272,9 @@ public class ApplicationController
 		{
 			sendString(renterType);
 			
+			waitForMsg(2);
 			String renterUsername = msgFromGUI[2];
+			waitForMsg(3);
 			String renterPass = msgFromGUI[3];
 			sendString(renterUsername);
 			sendString(renterPass);
@@ -243,62 +290,86 @@ public class ApplicationController
 			{
 				//write to GUI that it is not okay to go to next window.
 				app.msgFromClient[0] = "NOT_VALID";
-		
 			}
-			
+			System.out.println("Login successful");
 			ArrayList<Property> properties = (ArrayList<Property>) objectIn.readObject();
-			int index = 0;
 			
+			Application.properties = properties;
 			
-			
-			while(!propertiesFlag)
-			{
-				for(int i = 0; i < properties.size(); i++)
-				{
-					System.out.println(properties.get(i));
-				}
-				propertiesFlag = true;
-			}
-			
+			waitForMsg(4); 
 			String regRenterOption = msgFromGUI[4];
+			System.out.println(regRenterOption);
 			switch(regRenterOption)
 			{
 				case("NOTIFICATIONS"):
 					break;
 				case("SEARCH_AND_SAVE"):
+					System.out.println("Searching!");
+					waitForMsg(5);
 					if(msgFromGUI[5] == "SEARCH")
 					{
 						System.out.println("Search button has been pressed.");
-						if(msgFromGUI[5] == "SEARCH_ID")
+						waitForMsg(6);
+						if(msgFromGUI[6] == "SEARCH_ID") // Searching by just id.
 						{
-							int propId = Integer.parseInt(msgFromGUI[6]);
-							System.out.println(propId);
-							
-							flushOutGUIBuffer(4, 6);
-						}
-						else
-						{
-							String searchHouseType = msgFromGUI[6];
-							int searchNumBeds = Integer.parseInt(msgFromGUI[7]);
-							int searchNumBaths = Integer.parseInt(msgFromGUI[8]);
-							boolean isSearchFurnished;
-							if(msgFromGUI[9] == "FURNISHED")
+							sendString("BY_ID");
+							waitForMsg(7);
+							sendString(msgFromGUI[7]);
+							//int propId = Integer.parseInt(msgFromGUI[6]);
+							//System.out.println(propId);
+							System.out.println("searching...");
+				
+							ArrayList<Property> newProperties = (ArrayList<Property>) objectIn.readObject();
+							RegisteredRenter.msgFromClient[0] = "UPDATE";
+							for(int i = 0; i < newProperties.size(); i++)
 							{
-								isSearchFurnished = true;
+								System.out.println(newProperties.get(i));
+							}
+							System.out.println("updating...");
+							
+							
+							Application.properties = newProperties;
+							
+							flushOutGUIBuffer(4, 7);
+						}
+						else // Searching by filling out required fields in GUI.
+						{
+							sendString("BY_ELSE");
+							waitForMsg(7);
+							String searchHouseType = msgFromGUI[7];
+							sendString(searchHouseType);
+							waitForMsg(8);
+							int searchNumBeds = Integer.parseInt(msgFromGUI[8]);
+							sendString(Integer.toString(searchNumBeds));
+							waitForMsg(7);
+							int searchNumBaths = Integer.parseInt(msgFromGUI[9]);
+							sendString(Integer.toString(searchNumBaths));
+							waitForMsg(10);
+							if(msgFromGUI[10] == "FURNISHED")
+							{
+								sendString("1");
 							}
 							else
 							{
-								isSearchFurnished = false;
+								sendString("0");
 							}
-							String searchCityQuad = msgFromGUI[10];
+							waitForMsg(11);
+							String searchCityQuad = msgFromGUI[11];
+							sendString(searchCityQuad);
 							
-							System.out.println(searchHouseType);
-							System.out.println(searchNumBeds);
-							System.out.println(searchNumBaths);
-							System.out.println(isSearchFurnished);
-							System.out.println(searchCityQuad);
-							
-							flushOutGUIBuffer(4, 10);
+							System.out.println("searching...");
+							ArrayList<Property> newProperties = (ArrayList<Property>) objectIn.readObject();
+							RegisteredRenter.msgFromClient[0] = "UPDATE";
+							System.out.println("SIZE: " + newProperties.size());
+							for(int i = 0; i < newProperties.size(); i++)
+							{
+								System.out.println(newProperties.get(i));
+							}
+							System.out.println("updating...");
+						
+							Application.properties = newProperties;
+		
+							flushOutGUIBuffer(4, 11);
 						}
 					}
 					
@@ -308,7 +379,6 @@ public class ApplicationController
 					{
 						String emailToSend = msgFromGUI[5];
 						System.out.println(emailToSend);
-						
 						flushOutGUIBuffer(5, 5);
 					}
 					break;
@@ -318,6 +388,7 @@ public class ApplicationController
 		{
 			//System.out.println("no account");
 			sendString(renterType);
+			waitForMsg(4);
 			String regularRenterOption = msgFromGUI[4];
 			switch(regularRenterOption)
 			{
@@ -354,6 +425,7 @@ public class ApplicationController
 							System.out.println(isSearchFurnished);
 							System.out.println(searchCityQuad);
 							
+							waitByMili(500);
 							flushOutGUIBuffer(4, 10);
 						}
 					}
@@ -371,11 +443,21 @@ public class ApplicationController
 		}
 	}
 	
+	/**
+	 * Flushes out certain parts of the GUI buffer.
+	 * @param start is the exact point you want flushing to occur.
+	 * @param end is the exact end you want flushing to end.
+	 */
 	public void flushOutGUIBuffer(int start, int end)
 	{
 		for(int i = start; i <= end; i++)
 		{
 			msgFromGUI[i] = "";
+		}
+		
+		for(int i = 0; i < msgFromGUI.length; i++)
+		{
+			System.out.println(msgFromGUI[i]);
 		}
 	}
 	
@@ -390,23 +472,53 @@ public class ApplicationController
 	}
 	
 	/*** Getters ***/
+	/**
+	 * Gets user type.
+	 * @return user type as String.
+	 */
 	public String getUserType()
 	{
 		return userType;
 	}
 	
+	/**
+	 * Gets the Application.
+	 * @return app of type Application.
+	 */
 	public Application getApp()
 	{
 		return app;
 	}
 	
 	/*** Setters ***/
-	public void setUserType(String user)
+	/**
+	 * Waits for message to be received from the GUI, making sure index is not empty.
+	 * @param index is the point you want to make sure is not empty.
+	 */
+	public void waitForMsg(int index)
 	{
-		this.userType = user;
+		while(msgFromGUI[index] == "") {}
 	}
 	
+	/**
+	 * Puts main thread to sleep for length of mili in mili.
+	 * @param mili type long that indicates how long you want main system to sleep for.
+	 */
+	public void waitByMili(long mili)
+	{
+		try {
+			Thread.sleep(mili);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
+	/**
+	 * Behaves like the main for ApplicationController, controlled by Main.java.
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public static void mainClient() throws ClassNotFoundException, IOException
 	{
 		ApplicationController client = new ApplicationController("10.13.128.70", 4000);

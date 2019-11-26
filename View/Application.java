@@ -2,11 +2,14 @@ package View;
 
 import ClientController.ApplicationController;
 
+import Model.*;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.Font;
@@ -21,7 +24,7 @@ public class Application
 	public static volatile String msgFromClient[]; // Messages sent by client
 	protected ApplicationController theClient;
 	private JFrame frmRentalProperty;
-	
+	public static volatile ArrayList<Property> properties;
 	public Application(ApplicationController c)
 	{
 		this.theClient = c;
@@ -136,11 +139,20 @@ public class Application
 			msgFromClient[i] = "";
 		}
 	}
-	
+	protected void waitByMili(long mili)
+	{
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	protected void waitForMsg(int index)
 	{
 		while(msgFromClient[index] == "") {
 			//System.out.println(msgFromClient[index]);
+			//msgFromClient[index] = msgFromClient[index];
 		}
 	}
 	

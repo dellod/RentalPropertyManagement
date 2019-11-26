@@ -19,7 +19,7 @@ public class RenterGUI extends Application
 	private JFrame frmRentalPropertyrenter;
 	private JTextField textField;
 	private JPasswordField passwordField;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -88,16 +88,21 @@ public class RenterGUI extends Application
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//waitForMsg(1);
 				theClient.msgFromGUI[1] = "REGISTERED";
+				//waitForMsg(2);
 				theClient.msgFromGUI[2] = textField.getText();
+				//waitForMsg(3);
 				theClient.msgFromGUI[3] = new String(passwordField.getPassword());
 				// IF VERIFIED THEN...
 				//while(msgFromClient[0] == "") {System.out.println(msgFromClient[0]);}
+				//waitByMili(0);
 				waitForMsg(0);
 				if(msgFromClient[0] == "NOT_VALID")
 				{
-					infoBox("Invalid login information, please try again.", "Try again");
+					infoBox("Invalid login information.", "Error");
 					msgFromClient[0] = "";
+					System.exit(0);
 				}
 				else if(msgFromClient[0] == "VALID")
 				{

@@ -6,10 +6,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 import ClientController.ApplicationController;
+import Model.Property;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -80,6 +83,11 @@ public class RegisteredRenter extends RenterGUI{
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>(listModel);
 		listModel.addElement("Examine Properties Below");
+		for(int i = 0; i < properties.size(); i++)
+		{
+			listModel.addElement(properties.get(i).toString());
+		}
+		listModel.addElement(" ");
 		list.setBounds(10, 63, 472, 248);
 		list.setVisibleRowCount(20);
 		
@@ -88,8 +96,11 @@ public class RegisteredRenter extends RenterGUI{
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				int index = list.getSelectedIndex();
-				String line = (String) listModel.get(index);
-				textField.setText(line); // Displays selected text to textField at bottom of RegisteredRenter GUI.
+				if(index != 0)
+				{
+					String line = (String) listModel.get(index);
+					textField.setText(line); // Displays selected text to textField at bottom of RegisteredRenter GUI.
+				}
 			}
 		});
 		
@@ -204,25 +215,62 @@ public class RegisteredRenter extends RenterGUI{
 						theClient.msgFromGUI[5] = "SEARCH";
 						if(chckbxSearchByProperty.isSelected())
 						{
-							theClient.msgFromGUI[5] = "SEARCH_ID";
-							theClient.msgFromGUI[6] = txtPropID.getText();
+							theClient.msgFromGUI[6] = "SEARCH_ID";
+							theClient.msgFromGUI[7] = txtPropID.getText();
+							waitByMili(1);
+							listModel.clear();
+							listModel.addElement("Search results below.");
+							int old = properties.size();
+							while(old == properties.size())
+							{
+								properties = properties;
+							}
+							
+							for(int i = 0; i < properties.size(); i++)
+							{
+								listModel.addElement(properties.get(i).toString());
+							}
+							//listModel.addElement(" ");
+							//msgFromClient[0] = "";
 						}
 						else
 						{
-							theClient.msgFromGUI[5] = "SEARCH_ELSE";
-							theClient.msgFromGUI[6] = txtHouseType.getText();
-							theClient.msgFromGUI[7] = txtNumBeds.getText();
-							theClient.msgFromGUI[8] = txtNumbBaths.getText();
+							theClient.msgFromGUI[6] = "SEARCH_ELSE";
+							theClient.msgFromGUI[7] = txtHouseType.getText();
+							theClient.msgFromGUI[8] = txtNumBeds.getText();
+							theClient.msgFromGUI[9] = txtNumbBaths.getText();
 							if(chckbxFurnished.isSelected())
 							{
-								theClient.msgFromGUI[9] = "FURNISHED";
+								theClient.msgFromGUI[10] = "FURNISHED";
 							}
 							else
 							{
-								theClient.msgFromGUI[9] = "NOT_FURNISHED";
+								theClient.msgFromGUI[10] = "NOT_FURNISHED";
 							}
-							theClient.msgFromGUI[10] = quadrants[comboBoxQuadrant.getSelectedIndex()];
-							System.out.println(theClient.msgFromGUI[10]);
+							theClient.msgFromGUI[11] = quadrants[comboBoxQuadrant.getSelectedIndex()];
+							
+							int old = properties.size();
+							while(old == properties.size()) // Do this to make sure the properties changed if it really did.
+							{
+								properties = properties;
+							}
+							
+							waitByMili(1);
+							listModel.clear(); // Clear pervious list on screen.
+							if(properties.size() == 0)
+							{
+								listModel.addElement("No search results found.");
+							}
+							else
+							{
+								listModel.addElement("Search results below.");
+								for(int i = 0; i < properties.size(); i++)
+								{
+									listModel.addElement(properties.get(i).toString());
+								}
+								listModel.addElement(" ");
+							}
+							
 						}
 						searchWindow.dispose();
 					}
@@ -265,6 +313,9 @@ public class RegisteredRenter extends RenterGUI{
 						theClient.msgFromGUI[5] = "EMAIL_BUTTON";
 						theClient.msgFromGUI[5] = txtEmail.getText();
 						emailWindow.dispose();
+						//int indexSelectedPropEmail = list.getSelectedIndex();
+						
+						infoBox(list.getSelectedValue(), "Email Sent!");
 					}
 				});
 				btnSendEmail.setBounds(10, 237, 150, 21);
@@ -276,7 +327,5 @@ public class RegisteredRenter extends RenterGUI{
 		});
 		btnSendEmail.setBounds(516, 211, 110, 21);
 		frame.getContentPane().add(btnSendEmail);
-		
-		
 	}
 }
