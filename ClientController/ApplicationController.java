@@ -271,7 +271,6 @@ public class ApplicationController
 		if(renterType == "REGISTERED")
 		{
 			sendString(renterType);
-			
 			waitForMsg(2);
 			String renterUsername = msgFromGUI[2];
 			waitForMsg(3);
@@ -375,58 +374,103 @@ public class ApplicationController
 					
 					break;
 				case("EMAIL"):
+					waitForMsg(5);
 					if(msgFromGUI[5] == "EMAIL_BUTTON")
 					{
-						String emailToSend = msgFromGUI[5];
-						System.out.println(emailToSend);
-						flushOutGUIBuffer(5, 5);
+						System.out.println("Email button pressed.");
+						sendString("EMAIL");
+						waitForMsg(6);
+						String emailToSend = msgFromGUI[6];
+						sendString(emailToSend);
+						waitForMsg(7);
+						String propertyString = msgFromGUI[7];
+						sendString(propertyString);
+						flushOutGUIBuffer(5, 7);
 					}
 					break;
 			}
 		}
 		else if(renterType == "REGULAR")
 		{
-			//System.out.println("no account");
 			sendString(renterType);
+			
+			ArrayList<Property> properties = (ArrayList<Property>) objectIn.readObject();
+			while(properties.isEmpty())
+			{
+				System.out.println("test");
+				properties = (ArrayList<Property>) objectIn.readObject();
+			}
+			Application.properties = properties;
+			
 			waitForMsg(4);
 			String regularRenterOption = msgFromGUI[4];
 			switch(regularRenterOption)
 			{
 				case("SEARCH"):
+					System.out.println("Searching!");
+					waitForMsg(5);
 					if(msgFromGUI[5] == "SEARCH")
 					{
 						System.out.println("Search button has been pressed.");
-						if(msgFromGUI[5] == "SEARCH_ID")
+						waitForMsg(6);
+						if(msgFromGUI[6] == "SEARCH_ID")
 						{
-							int propId = Integer.parseInt(msgFromGUI[6]);
-							System.out.println(propId);
+							sendString("BY_ID");
+							waitForMsg(7);
+							sendString(msgFromGUI[7]);
+							System.out.println("searching...");
+				
+							ArrayList<Property> newProperties = (ArrayList<Property>) objectIn.readObject();
+							RegisteredRenter.msgFromClient[0] = "UPDATE";
+							for(int i = 0; i < newProperties.size(); i++)
+							{
+								System.out.println(newProperties.get(i));
+							}
+							System.out.println("updating...");
 							
-							flushOutGUIBuffer(4, 6);
+							
+							Application.properties = newProperties;
+							
+							flushOutGUIBuffer(4, 7);
 						}
 						else
 						{
-							String searchHouseType = msgFromGUI[6];
-							int searchNumBeds = Integer.parseInt(msgFromGUI[7]);
-							int searchNumBaths = Integer.parseInt(msgFromGUI[8]);
-							boolean isSearchFurnished;
-							if(msgFromGUI[9] == "FURNISHED")
+							sendString("BY_ELSE");
+							waitForMsg(7);
+							String searchHouseType = msgFromGUI[7];
+							sendString(searchHouseType);
+							waitForMsg(8);
+							int searchNumBeds = Integer.parseInt(msgFromGUI[8]);
+							sendString(Integer.toString(searchNumBeds));
+							waitForMsg(7);
+							int searchNumBaths = Integer.parseInt(msgFromGUI[9]);
+							sendString(Integer.toString(searchNumBaths));
+							waitForMsg(10);
+							if(msgFromGUI[10] == "FURNISHED")
 							{
-								isSearchFurnished = true;
+								sendString("1");
 							}
 							else
 							{
-								isSearchFurnished = false;
+								sendString("0");
 							}
-							String searchCityQuad = msgFromGUI[10];
+							waitForMsg(11);
+							String searchCityQuad = msgFromGUI[11];
+							sendString(searchCityQuad);
 							
-							System.out.println(searchHouseType);
-							System.out.println(searchNumBeds);
-							System.out.println(searchNumBaths);
-							System.out.println(isSearchFurnished);
-							System.out.println(searchCityQuad);
-							
-							waitByMili(500);
-							flushOutGUIBuffer(4, 10);
+							System.out.println("searching...");
+							ArrayList<Property> newProperties = (ArrayList<Property>) objectIn.readObject();
+							RegisteredRenter.msgFromClient[0] = "UPDATE";
+							System.out.println("SIZE: " + newProperties.size());
+							for(int i = 0; i < newProperties.size(); i++)
+							{
+								System.out.println(newProperties.get(i));
+							}
+							System.out.println("updating...");
+						
+							Application.properties = newProperties;
+		
+							flushOutGUIBuffer(4, 11);
 						}
 					}
 					break;
@@ -454,11 +498,11 @@ public class ApplicationController
 		{
 			msgFromGUI[i] = "";
 		}
-		
+		/*
 		for(int i = 0; i < msgFromGUI.length; i++)
 		{
 			System.out.println(msgFromGUI[i]);
-		}
+		}*/
 	}
 	
 	/**
@@ -521,7 +565,7 @@ public class ApplicationController
 	 */
 	public static void mainClient() throws ClassNotFoundException, IOException
 	{
-		ApplicationController client = new ApplicationController("10.13.128.70", 4000);
+		ApplicationController client = new ApplicationController("10.13.93.210", 4000);
 		client.getApp().mainGUI(client); // Launches GUI.
 		client.initalizeThenRun();
 	}

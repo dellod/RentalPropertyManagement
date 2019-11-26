@@ -83,6 +83,7 @@ public class RegisteredRenter extends RenterGUI{
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>(listModel);
 		listModel.addElement("Examine Properties Below");
+		waitByMili(100);
 		for(int i = 0; i < properties.size(); i++)
 		{
 			listModel.addElement(properties.get(i).toString());
@@ -311,7 +312,8 @@ public class RegisteredRenter extends RenterGUI{
 					public void actionPerformed(ActionEvent e) 
 					{
 						theClient.msgFromGUI[5] = "EMAIL_BUTTON";
-						theClient.msgFromGUI[5] = txtEmail.getText();
+						theClient.msgFromGUI[6] = txtEmail.getText();
+						theClient.msgFromGUI[7] = list.getSelectedValue();
 						emailWindow.dispose();
 						//int indexSelectedPropEmail = list.getSelectedIndex();
 						
