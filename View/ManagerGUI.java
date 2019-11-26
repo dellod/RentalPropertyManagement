@@ -94,10 +94,20 @@ public class ManagerGUI extends Application
 				theClient.msgFromGUI[2] = textField.getText();
 				theClient.msgFromGUI[3] = new String(passwordField.getPassword());
 				// IF VALID LOGIN THEN...
-				
-				frmRentalPropertymanager.dispose();
-				Manager m = new Manager(theClient);
-				m.ManagerMenuScreen(theClient);
+				waitForMsg(0);
+				if(msgFromClient[0] == "NOT_VALID")
+				{
+					infoBox("Invalid login information.", "Error");
+					msgFromClient[0] = "";
+					System.exit(0);
+				}
+				else if(msgFromClient[0] == "VALID")
+				{
+					frmRentalPropertymanager.dispose();
+					Manager m = new Manager(theClient);
+					m.ManagerMenuScreen(theClient);
+					msgFromClient[0] = "";
+				}
 			}
 		});
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 12));

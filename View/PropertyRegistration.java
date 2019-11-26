@@ -326,10 +326,15 @@ public class PropertyRegistration extends LandlordGUI
 		txtPropertyCountry.setBounds(390, 330, 86, 19);
 		frame.getContentPane().add(txtPropertyCountry);
 		
+		JCheckBox chckbxPostOnline = new JCheckBox("Post online?");
+		chckbxPostOnline.setBounds(253, 369, 95, 21);
+		frame.getContentPane().add(chckbxPostOnline);
+		
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				waitByMili(100);
 				theClient.msgFromGUI[2] = "REGISTER_PROPERTY";
 				if(chckbxFilledOutBefore.isSelected())
 				{
@@ -354,6 +359,17 @@ public class PropertyRegistration extends LandlordGUI
 					theClient.msgFromGUI[11] = txtPropertyCity.getText();
 					theClient.msgFromGUI[12] = txtPropertyProvince.getText();
 					theClient.msgFromGUI[13] = txtPropertyCountry.getText();
+					if(chckbxPostOnline.isSelected())
+					{
+						//System.out.println("onlinegui");
+						theClient.msgFromGUI[14] = "ONLINE";
+					}
+					else
+					{
+						//System.out.println("offlinegui");
+						theClient.msgFromGUI[14] = "OFFLINE";
+					}
+					theClient.msgFromGUI[15] = "BUTTON_PRESSED";
 				}
 				else
 				{
@@ -389,17 +405,18 @@ public class PropertyRegistration extends LandlordGUI
 					theClient.msgFromGUI[22] = txtPropertyCity.getText();
 					theClient.msgFromGUI[23] = txtPropertyProvince.getText();
 					theClient.msgFromGUI[24] = txtPropertyCountry.getText();
+					if(chckbxPostOnline.isSelected())
+					{
+						theClient.msgFromGUI[25] = "ONLINE";
+					}
+					else
+					{
+						theClient.msgFromGUI[25] = "OFFLINE";
+					}
 				}
-				
-				JFrame popup = new JFrame("Register Property");
-				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				JLabel statusLabel = new JLabel(msgFromClient[0], SwingConstants.CENTER);
-				msgFromClient[0] = "";
-				popup.setPreferredSize(new Dimension(300, 100));
-				popup.getContentPane().add(statusLabel, BorderLayout.CENTER);
-				popup.setLocationRelativeTo(frame);
-				popup.pack();
-				popup.setVisible(true);
+				infoBox("Property has been registered!", "Success");
+				waitByMili(100);
+				theClient.msgFromGUI[26] = "BUTTON_PRESSED";
 				//frame.dispose();
 			}
 		});
@@ -407,25 +424,5 @@ public class PropertyRegistration extends LandlordGUI
 		btnRegister.setBounds(131, 368, 85, 21);
 		frame.getContentPane().add(btnRegister);
 		
-		JButton btnPostOnline = new JButton("Register and Post Online");
-		btnPostOnline.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				theClient.msgFromGUI[2] = "POST";
-				
-				if(chckbxFilledOutBefore.isSelected())
-				{
-	
-				}
-				else
-				{
-					
-				}
-			}
-		});
-		
-		btnPostOnline.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnPostOnline.setBounds(226, 368, 177, 21);
-		frame.getContentPane().add(btnPostOnline);
 	}
 }

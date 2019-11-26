@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JList;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -54,7 +55,7 @@ public class RegularRenter extends RenterGUI{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 650, 450);
+		frame.setBounds(100, 100, 750, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -71,13 +72,19 @@ public class RegularRenter extends RenterGUI{
 		textField.setText("Please select property to examine above.");
 		textField.setEditable(false);
 		textField.setColumns(10);
-		textField.setBounds(131, 384, 351, 19);
+		textField.setBounds(131, 384, 595, 19);
 		frame.getContentPane().add(textField);
 		
 
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>(listModel);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(list);
+		list.setLayoutOrientation(JList.VERTICAL);
+		frame.getContentPane().add(scrollPane);
+		
 		listModel.addElement("Examine Properties Below");
 		while(properties==null)
 		{}
@@ -88,15 +95,15 @@ public class RegularRenter extends RenterGUI{
 		}
 		listModel.addElement(" ");
 		list.setVisibleRowCount(20);
-		list.setBounds(10, 63, 472, 248);
+		list.setBounds(10, 63, 596, 248);
 		list.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
-				int index = list.getSelectedIndex();
-				if(index != 0)
+				int listInd = list.getSelectedIndex();
+				if(listInd != 0)
 				{
-					String line = (String) listModel.get(index);
+					String line = (String) listModel.getElementAt(listInd);
 					textField.setText(line); // Displays selected text to textField at bottom of RegisteredRenter GUI.
 				}
 			}
@@ -114,7 +121,7 @@ public class RegularRenter extends RenterGUI{
 				System.exit(0);
 			}
 		});
-		button.setBounds(516, 24, 110, 21);
+		button.setBounds(616, 24, 110, 21);
 		frame.getContentPane().add(button);
 		
 		JButton btnSEARCH = new JButton("Search");
@@ -213,10 +220,11 @@ public class RegularRenter extends RenterGUI{
 						theClient.msgFromGUI[5] = "SEARCH";
 						if(chckbxSearchByProperty.isSelected())
 						{
+							System.out.println("test");
 							theClient.msgFromGUI[6] = "SEARCH_ID";
 							theClient.msgFromGUI[7] = txtPropID.getText();
 							waitByMili(1);
-							listModel.clear();
+							//listModel.clear();
 							listModel.addElement("Search results below.");
 							int old = properties.size();
 							while(old == properties.size())
@@ -254,7 +262,7 @@ public class RegularRenter extends RenterGUI{
 							}
 							
 							waitByMili(1);
-							listModel.clear(); // Clear pervious list on screen.
+							//listModel.clear(); // Clear pervious list on screen.
 							if(properties.size() == 0)
 							{
 								listModel.addElement("No search results found.");
@@ -281,7 +289,7 @@ public class RegularRenter extends RenterGUI{
 				searchWindow.setVisible(true);
 			}
 		});
-		btnSEARCH.setBounds(516, 149, 110, 21);
+		btnSEARCH.setBounds(616, 149, 110, 21);
 		frame.getContentPane().add(btnSEARCH);
 		
 		JButton btnEMAIL = new JButton("Send Email");
@@ -320,7 +328,7 @@ public class RegularRenter extends RenterGUI{
 				emailWindow.setVisible(true);
 			}
 		});
-		btnEMAIL.setBounds(516, 180, 110, 21);
+		btnEMAIL.setBounds(616, 180, 110, 21);
 		frame.getContentPane().add(btnEMAIL);
 	}
 }

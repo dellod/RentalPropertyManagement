@@ -104,10 +104,12 @@ public class ApplicationController
 			
 			if(userType == "Manager")
 			{
+				sendString(userType);
 				communicateManager();
 			}
 			else if(userType == "Landlord")
 			{
+				sendString(userType);
 				communicateLandlord();
 			}
 			else if(userType == "Renter")
@@ -120,16 +122,75 @@ public class ApplicationController
 	
 	/**
 	 * Communicates to the server as the manager.
+	 * @throws IOException 
 	 */
-	private void communicateManager()
+	private void communicateManager() throws IOException
 	{
 		//System.out.println("running manager");
+		waitForMsg(1);
 		if(msgFromGUI[1] == "LOGIN")
 		{
-			System.out.println(msgFromGUI[2]);
-			System.out.println(msgFromGUI[3]);
-			// VALIDATE IN HERE
-			flushOutGUIBuffer(1, 3);
+			//System.out.println(msgFromGUI[2]);
+			//System.out.println(msgFromGUI[3]);
+			waitForMsg(2);
+			String renterUsername = msgFromGUI[2];
+			sendString(renterUsername);
+			
+			waitForMsg(3);
+			String renterPass = msgFromGUI[3];
+			sendString(renterPass);
+			System.out.println("test");
+			boolean managerResult = objectIn.readBoolean();
+			System.out.println(managerResult);
+			if(managerResult)
+			{
+				app.msgFromClient[0] = "VALID";
+			}
+			else
+			{
+				app.msgFromClient[0] = "NOT_VALID";
+			}
+			flushOutGUIBuffer(2, 3);
+			
+			waitForMsg(4);
+			String manOption = msgFromGUI[4];
+			switch(manOption)
+			{
+				case "REPORT":
+					waitForMsg(5); // REPORT
+					sendString(msgFromGUI[5]);
+					
+					//START
+					waitForMsg(6);
+					sendString(msgFromGUI[6]);
+
+					waitForMsg(7);
+					sendString(msgFromGUI[6]);
+
+					waitForMsg(8);
+					sendString(msgFromGUI[6]);
+					
+					//END
+					waitForMsg(9);
+					sendString(msgFromGUI[6]);
+
+					waitForMsg(10);
+					sendString(msgFromGUI[6]);
+
+					waitForMsg(11);
+					sendString(msgFromGUI[6]);
+					
+					try {
+						Report theReport = (Report)objectIn.readObject();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println("***REPORT***");
+					System.out.println("\tNumber");
+					
+					break;
+			}
 		}
 	}
 	
@@ -139,115 +200,221 @@ public class ApplicationController
 	private void communicateLandlord()
 	{
 		//System.out.println("running landlord");
+		waitForMsg(1);
 		String landlordOption = msgFromGUI[1];
 		switch(landlordOption)
 		{
 			case "REGISTER":
+				waitForMsg(2);
 				if(msgFromGUI[2] == "REGISTER_PROPERTY") // Selected Register Property on GUI
 				{
+					sendString("ADDING_PROP");
+					waitForMsg(3);
 					if(msgFromGUI[3] == "REGISTERED") // Landlord that already exists in database.
 					{
+						sendString("REGISTERED");
 						System.out.println("Registered Landlord");
+						
 						/* Landlord Info */
+						waitForMsg(4);
 						String regEmail = msgFromGUI[4];
-						// Search database with this email
+						sendString(regEmail); // Search database with this email
 						
 						/* Property Info */
+						waitForMsg(5);
 						String regHouseType = msgFromGUI[5];
-						boolean regIsFurnished;
+						sendString(regHouseType);
+						
+						String regIsFurnished;
+						waitForMsg(6);
 						if(msgFromGUI[6] == "FURNISHED")
 						{
-							regIsFurnished = true;
+							regIsFurnished = "1";
 						}
 						else
 						{
-							regIsFurnished = false;
+							regIsFurnished = "0";
 						}
+						sendString(regIsFurnished);
+						
+						waitForMsg(7);
 						int regNumBaths = Integer.parseInt(msgFromGUI[7]);
+						sendString(Integer.toString(regNumBaths));
+						
+						waitForMsg(8);
 						int regNumBeds = Integer.parseInt(msgFromGUI[8]);
+						sendString(Integer.toString(regNumBeds));
+						
+						waitForMsg(9);
 						String regPropertyStreet = msgFromGUI[9];
+						sendString(regPropertyStreet);
+						
+						waitForMsg(10);
 						String regQuad = msgFromGUI[10];
+						sendString(regQuad);
+						
+						waitForMsg(11);
 						String regCity = msgFromGUI[11];
+						sendString(regCity);
+						
+						waitForMsg(12);
 						String regProv = msgFromGUI[12];
+						sendString(regProv);
+						
+						waitForMsg(13);
 						String regCountry = msgFromGUI[13];
+						sendString(regCountry);
 						
-						// Pass elements to create a new property to add to existing landlord
+						waitForMsg(14);
+						String postStatus = msgFromGUI[14]; // Online or offline.
+						//System.out.println(postStatus);
+						sendString(postStatus);
 						
-						/*
-						System.out.println("Email: " + regEmail);
-						System.out.println("HouseType: " + regHouseType);
-						System.out.println("Furnished: " + regIsFurnished);
-						System.out.println("Number of Bathromms: " + regNumBaths);
-						System.out.println("Number of Bedrooms: " + regNumBeds);
-						System.out.println("Property Street: " + regPropertyStreet);
-						System.out.println("Property Quad: " + regQuad);
-						System.out.println("City: " + regCity);
-						System.out.println("Province: " + regProv);
-						System.out.println("Country: " + regCountry);
-						*/
+						waitForMsg(15);
+						String buttonPress = msgFromGUI[15];
+						while(buttonPress  == "") {}
 						
 						/* Cleanup */
-						flushOutGUIBuffer(3, 13);
-						app.msgFromClient[0] = "Property registered!"; // THIS NEED TO CHAGNE IF NOT SUCCESSFUL
+						flushOutGUIBuffer(3, 15);
 					}
 					else if(msgFromGUI[3] == "NOT_REGISTERED") // Landlord that does not exist in database yet.
 					{
+						sendString("NOT_REGISTERED");
 						System.out.println("Not registered Landlord");
+						
 						/* Landlord Info */
+						waitForMsg(4);
 						String regFirstName = msgFromGUI[4];
+						sendString(regFirstName);
+						
+						waitForMsg(5);
 						String regLastName = msgFromGUI[5];
+						sendString(regLastName);
 						
+						waitForMsg(6);
 						String regGender = msgFromGUI[6];
-						
-						String regEmail = msgFromGUI[7];
-						
-						String regLandlordAddress = msgFromGUI[8];
-						String regLandlordQuad = msgFromGUI[9];
-						String regLandlordCity = msgFromGUI[10];
-						String regLandlordProv = msgFromGUI[11];
-						String regLandlordCountry = msgFromGUI[12];
-						
-						String regBirthMonth = msgFromGUI[13];
-						String regBirthDay = msgFromGUI[14];
-						String regBirthYear = msgFromGUI[15];
-						
-						/* Property Info */
-						String regHouseType = msgFromGUI[16];
-						boolean regIsFurnished;
-						if(msgFromGUI[17] == "FURNISHED")
+						if(regGender == "M")
 						{
-							regIsFurnished = true;
+							System.out.println("Male");
+							sendString("1");
 						}
 						else
 						{
-							regIsFurnished = false;
+							System.out.println("female");
+							sendString("0");
 						}
+						//sendString(regGender);
+						
+						waitForMsg(7);
+						String regEmail = msgFromGUI[7];
+						sendString(regEmail);
+						
+						waitForMsg(8);
+						String regLandlordAddress = msgFromGUI[8];
+						sendString(regLandlordAddress);
+						
+						waitForMsg(9);
+						String regLandlordQuad = msgFromGUI[9];
+						sendString(regLandlordQuad);
+						
+						waitForMsg(10);
+						String regLandlordCity = msgFromGUI[10];
+						sendString(regLandlordCity);
+						
+						waitForMsg(11);
+						String regLandlordProv = msgFromGUI[11];
+						sendString(regLandlordProv);
+						
+						waitForMsg(12);
+						String regLandlordCountry = msgFromGUI[12];
+						sendString(regLandlordCountry);
+						
+						waitForMsg(13);
+						String regBirthMonth = msgFromGUI[13];
+						sendString(regBirthMonth);
+
+						waitForMsg(14);
+						String regBirthDay = msgFromGUI[14];
+						sendString(regBirthDay);
+
+						waitForMsg(15);
+						String regBirthYear = msgFromGUI[15];
+						sendString(regBirthYear);
+						
+						/* Property Info */
+						waitForMsg(16);
+						String regHouseType = msgFromGUI[16];
+						sendString(regHouseType);
+
+						String regIsFurnished;
+						if(msgFromGUI[17] == "FURNISHED")
+						{
+							regIsFurnished = "1";
+						}
+						else
+						{
+							regIsFurnished = "0";
+						}
+						sendString(regIsFurnished);
+
+						waitForMsg(18);
 						int regNumBaths = Integer.parseInt(msgFromGUI[18]);
+						sendString(Integer.toString(regNumBaths));
+
+						waitForMsg(19);
 						int regNumBeds = Integer.parseInt(msgFromGUI[19]);
+						sendString(Integer.toString(regNumBeds));
+
+						waitForMsg(20);
 						String regPropertyStreet = msgFromGUI[20];
+						sendString(regPropertyStreet);
+
+						waitForMsg(21);
 						String regQuad = msgFromGUI[21];
+						sendString(regQuad);
+
+						waitForMsg(22);
 						String regCity = msgFromGUI[22];
+						sendString(regCity);
+
+						waitForMsg(23);
 						String regProv = msgFromGUI[23];
+						sendString(regProv);
+
+						waitForMsg(24);
 						String regCountry = msgFromGUI[24];
+						sendString(regCountry);
+
+						waitForMsg(25);
+						String postStatus = msgFromGUI[25]; // Online or offline.
+						//System.out.println(postStatus);
+						sendString(postStatus);
+						
+						waitForMsg(26);
+						String buttonPress = msgFromGUI[26];
+						while(buttonPress  == "") {}
 						
 						/* Cleanup */
-						flushOutGUIBuffer(3, 24);
+						flushOutGUIBuffer(3, 26);
 						
 						app.msgFromClient[0] = "Property registered"; // NEEDS TO CHANGE IF NOT SUCCESSFUL
 					}
+					waitByMili(100);
 					//Have to let GUI know if registration was successful or not.
-					
-				}
-				else if(msgFromGUI[2] == "POST") // Selected change state on GUI
-				{
-					
 				}
 				break;
 			case "STATE":
+				sendString("CHANGESTATE");
+				waitForMsg(2);
 				if(msgFromGUI[2] == "CHANGE")
 				{
+					waitForMsg(3);
 					int propertyIdToSearch = Integer.parseInt(msgFromGUI[3]);
+					sendString(Integer.toString(propertyIdToSearch));
+					
+					waitForMsg(4);
 					String newState = msgFromGUI[4];
+					sendString(newState);
 					
 					System.out.println("Property ID: " + propertyIdToSearch);
 					System.out.println("New State: " + newState);
