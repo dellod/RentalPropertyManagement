@@ -80,8 +80,11 @@ public class Manager extends ManagerGUI{
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				int index = list.getSelectedIndex();
-				String line = (String) listModel.get(index);
-				selectedText.setText(line); // Displays selected text to textField at bottom of RegisteredRenter GUI.
+				if(index != 0)
+				{
+					String line = (String) listModel.get(index);
+					selectedText.setText(line); // Displays selected text to textField at bottom of RegisteredRenter GUI.
+				}
 			}
 		});
 		

@@ -166,20 +166,20 @@ public class ApplicationController
 					sendString(msgFromGUI[6]);
 
 					waitForMsg(7);
-					sendString(msgFromGUI[6]);
+					sendString(msgFromGUI[7]);
 
 					waitForMsg(8);
-					sendString(msgFromGUI[6]);
+					sendString(msgFromGUI[8]);
 					
 					//END
 					waitForMsg(9);
-					sendString(msgFromGUI[6]);
+					sendString(msgFromGUI[9]);
 
 					waitForMsg(10);
-					sendString(msgFromGUI[6]);
+					sendString(msgFromGUI[10]);
 
 					waitForMsg(11);
-					sendString(msgFromGUI[6]);
+					sendString(msgFromGUI[11]);
 					
 					Report theReport = (Report)objectIn.readObject();
 			
@@ -719,7 +719,6 @@ public class ApplicationController
 		try {
 			Thread.sleep(mili);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
