@@ -728,9 +728,9 @@ public class ApplicationController
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static void mainClient() throws ClassNotFoundException, IOException
+	public static void mainClient(String[] args) throws ClassNotFoundException, IOException
 	{
-		ApplicationController client = new ApplicationController("10.13.93.210", 4000);
+		ApplicationController client = new ApplicationController(args[0], Integer.parseInt(args[1]));
 		client.getApp().mainGUI(client); // Launches GUI.
 		client.initalizeThenRun();
 	}

@@ -390,9 +390,9 @@ public class Server
 	public void wait(String s) throws IOException {
 		while(socketIn.readLine() == s) {}
 	}
-	public static void mainServer() throws SQLException
+	public static void mainServer(String[] args) throws SQLException
 	{
-		Server s = new Server(4000);
+		Server s = new Server(Integer.parseInt(args[0]));
 		s.communicate();
 	}
 }

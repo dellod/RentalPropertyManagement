@@ -15,10 +15,10 @@ public class Main
 		switch(CHOICE)
 		{
 			case "CLIENT":
-				ApplicationController.mainClient();
+				ApplicationController.mainClient(args);
 				break;
 			case "SERVER":
-				Server.mainServer();
+				Server.mainServer(args);
 				break;
 			default:
 				System.out.println("Error in Main.java");
