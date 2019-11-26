@@ -87,25 +87,36 @@ public class DataBase {
    public Report generateReport(MyDate a,MyDate b) throws SQLException {
 	   
 	   //STR_TO_DATE('07-25-2012','%m-%d-%y');STR_TO_DATE('07-25-2012','%m-%d-%y')
-	   String query = "select count(*) from Property where regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
+	   //String query = "select count(*) from Property where regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
+	   //String query = "select count(*) from Property where regDate == STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
+	   //System.out.println("DDD"+a.getDay());
+	   //System.out.println("MMM"+a.getMonth());
+	   //System.out.println("YYY"+a.getYear());
+	   String query = "select count(*) from Property where regDate >= '"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
+	   //String query ="select count(*) from Property where regDate >= '2019-11-24'";
+	  // String query = "select count(*) from Property where regDate >= '"+Integer.toString(a.getYear())+Integer.toString(a.getMonth())+Integer.toString(a.getDay())+"'"; 
+	   //String query = "select count(*) from Property";
 	   //String query = "select count(*) from Property where regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
 	   ResultSet rs = stm.executeQuery(query);
 	   rs.next();
 	   int numList = rs.getInt("count(*)");
 	   
+	   query = "select count(*) from Property where state = 'rented' and regDate >= '"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
 	   //query = "select count(*) from Property where state = 'rented' and regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
-	   query = "select count(*) from Property where state = 'rented' and regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
+	   //query = "select count(*) from Property where state = 'rented' and regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
 	   rs = stm.executeQuery(query);
 	   rs.next();
 	   int numRented = rs.getInt("count(*)");
 	   
+	   query = "select * from Property where state = 'rented' and regDate >= '"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
 	   //query = "select * from Property where state = 'rented' and regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
-	   query = "select * from Property where state= 'rented' and regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
+	   //query = "select * from Property where state= 'rented' and regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
 	   rs = stm.executeQuery(query); 
 	   ArrayList<Property> rentedProperty = convertToProperty(rs);
 	   
+	   query = "select count(*) from Property where state = 'active' and regDate >= '"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
 	   //query = "select count(*) from Property where state = 'active' and regDate >= '"+ a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"' and regDate <= '"+ b.getYear()+"-"+b.getMonth()+"-"+b.getDay()+"'";
-	   query = "select count(*) from Property where state = 'active' and regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
+	   //query = "select count(*) from Property where state = 'active' and regDate >= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d') and regDate <= STR_TO_DATE('"+a.getYear()+"-"+a.getMonth()+"-"+a.getDay()+"', '%y-%m-%d')"; 
 	   rs = stm.executeQuery(query);
 	   rs.next();
 	   int numActive = rs.getInt("count(*)");

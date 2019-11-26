@@ -135,11 +135,15 @@ public class Server
 		int AM = Integer.parseInt(afterM);
 		String afterY = socketIn.readLine();
 		int AY = Integer.parseInt(afterY);
-		
+		////System.out.println("DDDDDDDDDDDDDDDdddd"+startD);
+		System.out.println("mmmmmmmmmmmmm"+startM);
+		////System.out.println("yyyyyyyyyyyyy"+startY);
 		MyDate start = new MyDate(SD,SM,SY);
 		MyDate after = new MyDate(AD,AM,AY);
 		
 		objectOut.writeObject(modelController.generateReport(start, after));
+		objectOut.flush();
+		System.out.println(modelController.generateReport(start, after));
 	}
 	public boolean managerLogin() throws IOException, SQLException {
 		String username = socketIn.readLine();
