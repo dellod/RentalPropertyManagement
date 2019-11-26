@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Report 
+public class Report implements Serializable
 {
 	private int numHouseListings;
 	private int numHousesRented;
@@ -17,7 +18,8 @@ public class Report
 		this.numHousesRented = housesRented;
 		this.numActiveListings = activeListings;
 		this.listRented = list;
-		reportDate.setCurrentDate(); // Needs to have current date.
+		reportDate = new MyDate();
+		//reportDate.setCurrentDate(); // Needs to have current date.
 	}
 	
 	/*** Methods ***/
