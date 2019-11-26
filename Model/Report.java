@@ -23,6 +23,21 @@ public class Report implements Serializable
 	}
 	
 	/*** Methods ***/
-	
+	public String toString()
+	{
+		String properties = "";
+		for(int i = 0; i < listRented.size(); i++)
+		{
+			properties += "\n\t";
+			properties += listRented.get(i).toString();
+		}
+		return ("***REPORT***"
+				+ "\n\tTotal House Listings: " + numHouseListings
+				+ "\n\tTotal House Rentings: " + numHousesRented
+				+ "\n\tTotal Acitve Listings: " + numActiveListings
+				+ properties
+				+ "\n\t" + reportDate.toString()
+				+ "***********");
+	}
 	/*** Getters ***/
 }

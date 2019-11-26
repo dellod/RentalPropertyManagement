@@ -216,6 +216,9 @@ public class Manager extends ManagerGUI{
 				});
 				btnGenerate.setBounds(189, 217, 85, 21);
 				reportWindow.getContentPane().add(btnGenerate);
+				
+				reportWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				reportWindow.setVisible(true);
 			}
 		});
 		btnGenerateReport.setBounds(516, 171, 110, 21);

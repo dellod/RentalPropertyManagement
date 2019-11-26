@@ -123,8 +123,9 @@ public class ApplicationController
 	/**
 	 * Communicates to the server as the manager.
 	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	private void communicateManager() throws IOException
+	private void communicateManager() throws IOException, ClassNotFoundException
 	{
 		//System.out.println("running manager");
 		waitForMsg(1);
@@ -180,15 +181,13 @@ public class ApplicationController
 					waitForMsg(11);
 					sendString(msgFromGUI[6]);
 					
-					try {
-						Report theReport = (Report)objectIn.readObject();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					System.out.println("***REPORT***");
-					System.out.println("\tNumber");
+					Report theReport = (Report)objectIn.readObject();
+			
+					System.out.println(theReport);
 					
+					flushOutGUIBuffer(4, 11);
+					break;
+				case "":
 					break;
 			}
 		}
